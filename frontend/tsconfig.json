@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",         // ✅ 允許 JSX（通常預設有）
+    "allowJs": true,            // ✅ 允許 .js/.jsx 檔案
+    "checkJs": false,           // ✅ 不要檢查 .js/.jsx 的型別錯誤
+  },
+  "include": [
+    "src"
+  ]
+}
+
+// {
+//   "files": [],
+//   "references": [
+//     { "path": "./tsconfig.app.json" },
+//     { "path": "./tsconfig.node.json" }
+//   ]
+// }
