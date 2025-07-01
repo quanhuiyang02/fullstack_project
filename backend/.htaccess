@@ -1,0 +1,18 @@
+# 啟用 RewriteEngine
+RewriteEngine On
+RewriteBase /
+
+# 排除真實檔案或資料夾
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# 將所有請求導向 index.php 並保留 PATH_INFO
+RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+
+# 前端呼叫範例 (RESTful URL)：
+# GET  /pet/get_pet?user_id=1
+# POST /pet/feed            Body: {"user_id":1}
+# POST /pet/play            Body: {"user_id":1}
+# POST /pet/clean           Body: {"user_id":1}
+# POST /pet/rest            Body: {"user_id":1}
+# GET  /inventory/get_inventory?user_id=1
