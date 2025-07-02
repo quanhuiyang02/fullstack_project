@@ -19,7 +19,7 @@ if($db) {
         'items' => '遊戲物品',
         'user_inventory' => '用戶物品庫存',
         'achievements' => '成就系統',
-        'user_achievements' => '用戶成就記錄s',
+        'user_achievements' => '用戶成就記錄',
         'game_logs' => '遊戲日誌',
         'shop_transactions' => '商店交易記錄'
     ];
@@ -132,7 +132,7 @@ if($db) {
             echo "⚠️ 尚未建立效能優化索引<br>";
         }
         
-        echo "<br>🎮 <strong>結論：資料庫已準備就緒，可以開始遊戲開發！</strong><br>";
+        echo "<br>🎮 <strong>總結：資料庫已準備就緒，可以開始遊戲開發！</strong><br>";
         
     } else {
         echo "⚠️ <strong>缺少以下資料表，需要執行建表SQL：</strong><br>";
