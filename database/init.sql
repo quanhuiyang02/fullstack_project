@@ -43,8 +43,8 @@ CREATE TABLE items (
     effect_value INT NOT NULL,
     price INT NOT NULL,
     description TEXT,
-    icon VARCHAR(10) DEFAULT '📦'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    icon VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '📦'
+)CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
 -- 用戶物品庫存表
@@ -68,7 +68,7 @@ CREATE TABLE achievements (
     condition_type ENUM('feed_count', 'play_count', 'level', 'coins', 'time_played') NOT NULL,
     condition_value INT NOT NULL,
     reward_coins INT DEFAULT 0
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 用戶成就表
 CREATE TABLE user_achievements (
