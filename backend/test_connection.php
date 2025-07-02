@@ -14,14 +14,14 @@ if($db) {
     
     // 定義應該存在的資料表
     $expected_tables = [
-        'users' => '用戶管理 users',
-        'pets' => '寵物資料 pets', 
-        'items' => '遊戲物品 items',
-        'user_inventory' => '用戶物品庫存 user_inventory',
-        'achievements' => '成就系統 achievements',
-        'user_achievements' => '用戶成就記錄 user_achievements',
-        'game_logs' => '遊戲日誌 game_logs',
-        'shop_transactions' => '商店交易記錄 shop_transactions'
+        'users' => '用戶管理',
+        'pets' => '寵物資料', 
+        'items' => '遊戲物品',
+        'user_inventory' => '用戶物品庫存',
+        'achievements' => '成就系統',
+        'user_achievements' => '用戶成就記錄s',
+        'game_logs' => '遊戲日誌',
+        'shop_transactions' => '商店交易記錄'
     ];
     
     // 檢查資料表是否存在
