@@ -1,5 +1,5 @@
 <?php
-// index.php - RESTful style API 路由（使用 URL 重寫以支援 PATH_INFO）
+// index.php - RESTful style API 路由（使用 REQUEST_URI）
 
 // 1. 設定 CORS 與 JSON 回應
 header("Access-Control-Allow-Origin: *");
@@ -18,9 +18,26 @@ require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/models/Pet.php';
 require_once __DIR__ . '/models/Inventory.php';
 
-// 4. 取得 PATH_INFO 中的路由資訊
-$pathInfo = isset($_SERVER['PATH_INFO']) ? trim($_SERVER['PATH_INFO'], '/') : '';
-$parts    = explode('/', $pathInfo);
+// 4. 取得 REQUEST_URI 中的路由資訊
+$requestUri = $_SERVER['REQUEST_URI'];
+$path = parse_url($requestUri, PHP_URL_PATH);
+$pathInfo = trim($path, '/');
+$parts = explode('/', $pathInfo);
+
+// 處理根路徑
+if (empty($pathInfo) || $pathInfo === '') {
+    echo json_encode([
+        'status' => 'success', 
+        'message' => 'Pet Game API Server is running',
+        'timestamp' => date('Y-m-d H:i:s'),
+        'endpoints' => [
+            '/pet/get_pet' => 'Get pet information',
+            '/pet/feed' => 'Feed the pet',
+            '/inventory/get_items' => 'Get inventory items'
+        ]
+    ]);
+    exit;
+}
 
 if (count($parts) < 2) {
     http_response_code(404);
