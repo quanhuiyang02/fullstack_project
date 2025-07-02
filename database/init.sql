@@ -44,7 +44,8 @@ CREATE TABLE items (
     price INT NOT NULL,
     description TEXT,
     icon VARCHAR(10) DEFAULT '📦'
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- 用戶物品庫存表
 CREATE TABLE user_inventory (
@@ -53,9 +54,10 @@ CREATE TABLE user_inventory (
     item_id INT NOT NULL,
     quantity INT DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE,
     UNIQUE KEY unique_user_item (user_id, item_id)
 );
+
 
 -- 成就表
 CREATE TABLE achievements (
@@ -66,7 +68,7 @@ CREATE TABLE achievements (
     condition_type ENUM('feed_count', 'play_count', 'level', 'coins', 'time_played') NOT NULL,
     condition_value INT NOT NULL,
     reward_coins INT DEFAULT 0
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 用戶成就表
 CREATE TABLE user_achievements (
