@@ -1,0 +1,12 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "PHP backend server",
+  "scripts": {
+    "start": "C:\\xampp\\php\\php.exe -S localhost:8000",
+    "dev": "C:\\xampp\\php\\php.exe -S localhost:8000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "fullstack_project",
+  "version": "1.0.0",
+  "description": "Full stack project with React frontend and PHP backend",
+  "scripts": {
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && npm run start",
+    "dev": "cd frontend && npm run dev",
+    "server": "cd backend && npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
