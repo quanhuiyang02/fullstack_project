@@ -1,7 +1,9 @@
 // @ts-nocheck
 import React, { useState, useEffect, useRef } from 'react';
 import { Heart, Utensils, Gamepad2, Bath, Coins, Star, Clock, Trophy, Home, User, Settings } from 'lucide-react';
-
+import background from './assets/bg.gif';
+import petGif from './assets/ch.gif';  
+import eat from './assets/eat.gif';  
 const VirtualPetGame = () => {
   // 遊戲狀態
   const [pet, setPet] = useState({
@@ -198,77 +200,80 @@ const VirtualPetGame = () => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`${color} text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 shadow-lg`}
+      className={`${color} text-white px-2 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 shadow-lg`}
     >
       {children}
     </button>
   );
 
   const HomeView = () => (
-    <div className="space-y-6">
-      {/* 寵物顯示區域 */}
-      <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-6 text-center shadow-lg">
-        <div className="text-8xl mb-4 animate-bounce">
-          {getPetEmoji()}
-        </div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">{pet.name}</h2>
-        <p className="text-gray-600">等級 {pet.level} • 經驗值 {pet.exp}/100</p>
-        <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-          <div 
-            className="bg-purple-500 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${(pet.exp % 100)}%` }}
+    <div className="flex flex-col flex-1 overflow-hidden relative">
+       <img
+          src={petGif}
+          alt="寵物"
+          className="w-[192px] h-[192px] object-contain absolute z-10 pointer-events-none"
+          style={{ right: '1rem', bottom: '6rem' }}  
           />
+      {/* 上半部：寵物顯示區域 + 狀態條 */}
+      <div className="flex-1 overflow-x-hidden overflow-y-auto space-y-6 pb-2 max-h-[calc(100%-100px)]">
+        {/* 寵物顯示區域 */}
+        <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-6 text-center shadow-lg relative">
+          <div className="text-8xl mb-4 animate-bounce">
+            {getPetEmoji()}
+          </div>
+         
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">{pet.name}</h2>
+          <p className="text-gray-600">等級 {pet.level} • 經驗值 {pet.exp}/100</p>
+          <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+            <div 
+              className="bg-purple-500 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${(pet.exp % 100)}%` }}
+            />
+          </div>
+        </div>
+  
+        {/* 狀態欄 */}
+        <div className="grid grid-cols-1 gap-3">
+          <StatusBar label="健康" value={pet.health} icon={<Heart className="w-4 h-4 text-red-500" />} />
+          <StatusBar label="飢餓" value={pet.hunger} icon={<Utensils className="w-4 h-4 text-orange-500" />} />
+          <StatusBar label="快樂" value={pet.happiness} icon={<Star className="w-4 h-4 text-yellow-500" />} />
+          <StatusBar label="精力" value={pet.energy} icon={<Clock className="w-4 h-4 text-blue-500" />} />
+          <StatusBar label="清潔" value={pet.cleanliness} icon={<Bath className="w-4 h-4 text-cyan-500" />} />
         </div>
       </div>
-
-      {/* 狀態欄 */}
-      <div className="grid grid-cols-1 gap-3">
-        <StatusBar label="健康" value={pet.health} icon={<Heart className="w-4 h-4 text-red-500" />} />
-        <StatusBar label="飢餓" value={pet.hunger} icon={<Utensils className="w-4 h-4 text-orange-500" />} />
-        <StatusBar label="快樂" value={pet.happiness} icon={<Star className="w-4 h-4 text-yellow-500" />} />
-        <StatusBar label="精力" value={pet.energy} icon={<Clock className="w-4 h-4 text-blue-500" />} />
-        <StatusBar label="清潔" value={pet.cleanliness} icon={<Bath className="w-4 h-4 text-cyan-500" />} />
-      </div>
-
-      {/* 操作按鈕 */}
-      <div className="grid grid-cols-2 gap-3">
-        <ActionButton 
-          onClick={feedPet} 
-          disabled={inventory.food === 0}
-          color="bg-orange-500"
-        >
-          <Utensils className="w-4 h-4 inline mr-2" />
-          餵食 ({inventory.food})
-        </ActionButton>
-        
-        <ActionButton 
-          onClick={playWithPet} 
-          disabled={pet.energy < 20}
-          color="bg-green-500"
-        >
-          <Gamepad2 className="w-4 h-4 inline mr-2" />
-          遊戲
-        </ActionButton>
-        
-        <ActionButton 
-          onClick={cleanPet} 
-          disabled={inventory.soap === 0}
-          color="bg-cyan-500"
-        >
-          <Bath className="w-4 h-4 inline mr-2" />
-          清潔 ({inventory.soap})
-        </ActionButton>
-        
-        <ActionButton 
-          onClick={restPet}
-          color="bg-purple-500"
-        >
-          <Clock className="w-4 h-4 inline mr-2" />
-          休息
-        </ActionButton>
+  
+      {/* 下半部：操作按鈕固定在底部上方 */}
+      <div className="mt-auto px-4 pb-2">
+        <div className="w-full flex justify-between items-center gap-x-2">
+          <ActionButton onClick={feedPet} disabled={inventory.food === 0} color="bg-orange-500">
+            <div className="flex flex-col items-center text-xs">
+              <Utensils className="w-5 h-5 mb-1" />
+              餵食
+            </div>
+          </ActionButton>
+          <ActionButton onClick={playWithPet} disabled={pet.energy < 20} color="bg-green-500">
+            <div className="flex flex-col items-center text-xs">
+              <Gamepad2 className="w-5 h-5 mb-1" />
+              遊戲
+            </div>
+          </ActionButton>
+          <ActionButton onClick={cleanPet} disabled={inventory.soap === 0} color="bg-cyan-500">
+            <div className="flex flex-col items-center text-xs">
+              <Bath className="w-5 h-5 mb-1" />
+              清潔
+            </div>
+          </ActionButton>
+          <ActionButton onClick={restPet} color="bg-purple-500">
+            <div className="flex flex-col items-center text-xs">
+              <Clock className="w-5 h-5 mb-1" />
+              休息
+            </div>
+          </ActionButton>
+        </div>
       </div>
     </div>
   );
+  
 
   const ShopView = () => (
     <div className="space-y-4">
@@ -360,72 +365,89 @@ const VirtualPetGame = () => {
       </div>
     </div>
   );
-
+  
   return (
-    <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
-      {/* 通知 */}
-      {showNotification && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-pulse">
-          {showNotification}
-        </div>
-      )}
+    <div className="w-screen h-screen flex items-center justify-center bg-gray-200 overflow-hidden">
+      {/* 📱 手機框 */}
+      <div
+  className="w-[484px] h-[726px] rounded-[2rem] overflow-hidden shadow-xl
+             ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
+  style={{
+    // 只在首頁顯示背景，其餘 view 傳 'none'
+    backgroundImage: currentView === 'home' ? `url(${background})` : 'none',
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center'
+  }}
+>
 
-      {/* 頂部狀態欄 */}
-      <div className="bg-white p-4 shadow-sm">
-        <div className="flex justify-between items-center">
-          <h1 className="text-xl font-bold text-gray-800">虛擬寵物</h1>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center">
-              <Coins className="w-4 h-4 text-yellow-500 mr-1" />
-              <span className="font-medium">{pet.coins}</span>
+        {/* 通知 */}
+        {showNotification && (
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-pulse">
+            {showNotification}
+          </div>
+        )}
+  
+        {/* 頂部欄 */}
+        <div className="bg-white/80 p-4 shadow-sm">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-bold text-gray-800">虛擬寵物</h1>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center">
+                <Coins className="w-4 h-4 text-yellow-500 mr-1" />
+                <span className="font-medium">{pet.coins}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* 主要內容區域 */}
-      <div className="p-4 pb-20">
-        {currentView === 'home' && <HomeView />}
-        {currentView === 'shop' && <ShopView />}
-        {currentView === 'stats' && <StatsView />}
-      </div>
-
-      {/* 底部導航 */}
-      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-white border-t shadow-lg">
-        <div className="flex justify-around py-2">
-          <button
-            onClick={() => setCurrentView('home')}
-            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-              currentView === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
-            }`}
-          >
-            <Home className="w-5 h-5" />
-            <span className="text-xs mt-1">首頁</span>
-          </button>
-          
-          <button
-            onClick={() => setCurrentView('shop')}
-            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-              currentView === 'shop' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
-            }`}
-          >
-            <Coins className="w-5 h-5" />
-            <span className="text-xs mt-1">商店</span>
-          </button>
-          
-          <button
-            onClick={() => setCurrentView('stats')}
-            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-              currentView === 'stats' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
-            }`}
-          >
-            <Trophy className="w-5 h-5" />
-            <span className="text-xs mt-1">統計</span>
-          </button>
+  
+        {/* 中間內容，讓它佔滿剩下高度，避免溢出 */}
+        <div className="flex-1 overflow-y-auto p-4">
+          {currentView === 'home' && <HomeView />}
+          {currentView === 'shop' && <ShopView />}
+          {currentView === 'stats' && <StatsView />}
+        </div>
+  
+        {/* ✅ 底部導航「放在 flex 結構的最下層」，不使用 fixed/absolute */}
+        <div className="bg-white border-t shadow-lg">
+          <div className="flex justify-around py-2">
+            <button
+              onClick={() => setCurrentView('home')}
+              className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
+                currentView === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
+              }`}
+            >
+              <Home className="w-5 h-5" />
+              <span className="text-xs mt-1">首頁</span>
+            </button>
+  
+            <button
+              onClick={() => setCurrentView('shop')}
+              className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
+                currentView === 'shop' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
+              }`}
+            >
+              <Coins className="w-5 h-5" />
+              <span className="text-xs mt-1">商店</span>
+            </button>
+  
+            <button
+              onClick={() => setCurrentView('stats')}
+              className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
+                currentView === 'stats' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
+              }`}
+            >
+              <Trophy className="w-5 h-5" />
+              <span className="text-xs mt-1">統計</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
+  
+  
+  
 };
 
 export default VirtualPetGame;
