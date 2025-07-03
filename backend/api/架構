@@ -1,0 +1,17 @@
+api/
+├── pet/
+│   ├── get_pet.php
+│   ├── update_stats.php
+│   └── get_status.php
+├── actions/
+│   ├── feed_action.php
+│   ├── play_action.php
+│   ├── clean_action.php
+│   └── rest_action.php
+├── inventory/
+│   ├── get_inventory.php
+│   ├── use_item.php
+│   └── buy_item.php
+└── shop/
+    ├── get_items.php
+    └── purchase.php
