@@ -391,7 +391,7 @@ const VirtualPetGame = () => {
         {/* 頂部欄 */}
         <div className="bg-white/80 p-4 shadow-sm">
           <div className="flex justify-between items-center">
-            <h1 className="text-xl font-bold text-gray-800">虛擬寵物</h1>
+            <h1 className="text-xl font-bold text-gray-800">心寵生活</h1>
             <div className="flex items-center space-x-4">
               <div className="flex items-center">
                 <Coins className="w-4 h-4 text-yellow-500 mr-1" />
