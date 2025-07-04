@@ -13,14 +13,12 @@ fullstack_project/
 │   ├── public/        # PHP 路由處理（index.php）
 │   └── python/        # Flask API 或背景任務（app.py）
 ├── database/          # SQL 腳本 / 初始資料
-├── scripts/           # 跨平台啟動腳本
-│   ├── start-win.bat
-│   └── start-mac.sh
+
 ```
 
 ---
 
-## 🚀 一鍵啟動（跨平台）
+## 🚀 如何啟動專案
 
 ### 🔧 前置作業
 
@@ -31,25 +29,11 @@ npm install
 
 ### ▶️ 啟動開發環境
 
-#### 🪟 Windows
-
-```bash
-scripts\start-win.bat
-```
-
-#### 🍎 macOS / Linux
-
-```bash
-./scripts/start-mac.sh
-```
-
-這會同時啟動：
-
 | 服務         | 埠口         |
 |--------------|--------------|
 | React + Vite | `localhost:5173` |
-| PHP API      | `localhost:8001` |
-| Python Flask | `localhost:8000` |
+| PHP API      | `localhost:8000` |
+| Python Flask | `localhost:8001` |
 
 ---
 
@@ -58,8 +42,8 @@ scripts\start-win.bat
 ```ts
 server: {
   proxy: {
-    '/pet': 'http://localhost:8001',
-    '/inventory': 'http://localhost:8001',
+    '/pet': 'http://localhost:8000',
+    '/inventory': 'http://localhost:8000',
     '/api': 'http://localhost:8000'
   }
 }
@@ -77,8 +61,6 @@ fetch("/api/pet_status")
 
 ```bash
 npm run dev          # 啟動前端
-npm run start:mac    # 呼叫 macOS 啟動流程（在 package.json 自訂）
-npm run start:win    # 呼叫 Windows 啟動流程（在 package.json 自訂）
 ```
 
 ---
