@@ -7,7 +7,7 @@ import eat from './assets/eat.gif';
 const VirtualPetGame = () => {
   // 遊戲狀態
   const [pet, setPet] = useState({
-    name: "小貓咪",
+    name: "臭屁星人",
     type: "cat",
     level: 1,
     exp: 0,
@@ -177,25 +177,99 @@ const VirtualPetGame = () => {
     if (pet.cleanliness < 30) return '🤢';
     return '😊';
   };
-
-  const StatusBar = ({ label, value, icon, color }) => (
-    <div className="bg-white rounded-lg p-3 shadow-sm">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center space-x-2">
-          {icon}
-          <span className="text-sm font-medium text-gray-700">{label}</span>
+  const ExpBar = ({ level, exp }) => {
+    const prog = exp % 100;        // 0–99
+    return (
+      <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'4px', marginBottom:'8px' }}>
+        {/* 外框 */}
+        <div
+          style={{
+            position:'relative',
+            width :'220px',          // 你想多寬自己改
+            height:'10px',
+            imageRendering:'pixelated',
+  
+            /* 黑色邊框 + 1px 內距模擬像素描邊 */
+            background:'#000',
+            padding:'2px',
+            boxSizing:'content-box',
+          }}
+        >
+          {/* 內框（白底） */}
+          <div style={{
+            position:'absolute',
+            inset : 0,
+            background:'#fff',
+          }} />
+  
+          {/* 綠色進度條 */}
+          <div style={{
+            position:'absolute',
+            top : 0,
+            left: 0,
+            width:`${prog}%`,
+            height:'100%',
+            background:'#8bc34a',   // 你想換顏色就改這裡
+          }} />
+  
+          {/* 文字 EXP */}
+          <span style={{
+            position:'absolute',
+            left :'6px',
+            top  :'50%',
+            transform:'translateY(-50%)',
+            fontFamily:'"Press Start 2P", monospace',
+            fontSize:'10px',
+            color:'#000',
+            pointerEvents:'none',
+          }}>
+            EXP
+          </span>
+  
+          {/* 右下階梯效果：用 ::after 疊一格一格的白塊 */}
+          <span style={{ }} />
         </div>
-        <span className="text-sm font-bold">{Math.round(value)}%</span>
+  
+        {/* LV + 數字 */}
+        <span style={{
+          fontFamily:'"Press Start 2P", monospace',
+          fontSize  :'12px',
+          color     :'#ec4899',
+        }}>
+          LV {level}  •  {exp}/100
+        </span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2">
-        <div 
-          className={`h-2 rounded-full transition-all duration-300 ${getStatusColor(value)}`}
-          style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
-        />
+    );
+  };
+  const StatusBox = ({ label, value, icon }) => (
+    <div
+      /* 外框樣式 */
+      style={{
+        display        : 'flex',
+        alignItems     : 'center',
+        justifyContent : 'space-between',
+  
+        /* 框線 + 半透明底做毛玻璃感 */
+        backgroundColor: 'rgba(194, 202, 77, 0.44)',
+        backdropFilter : 'blur(6px)',
+        WebkitBackdropFilter : 'blur(6px)',
+        border         : '1.5px solid rgb(250, 245, 245)',
+        borderRadius   : '0.5rem',
+        padding        : '0.3rem 0.6rem',
+      }}
+    >
+      {/* 左側：圖示 + 標籤 */}
+      <div style={{ display:'flex', alignItems:'center', gap:'4px' }}>
+        {icon}
+        <span style={{ fontSize:'0.75rem', fontWeight:600 }}>{label}</span>
       </div>
+  
+      {/* 右側：百分比數字 */}
+      <span style={{ fontSize:'0.8rem', fontWeight:700 }}>
+        {Math.round(value)}%
+      </span>
     </div>
   );
-
   const ActionButton = ({ onClick, disabled, children, color = "bg-blue-500" }) => (
     <button
       onClick={onClick}
@@ -207,42 +281,70 @@ const VirtualPetGame = () => {
   );
 
   const HomeView = () => (
-    <div className="flex flex-col flex-1 overflow-hidden relative">
+    <div className="relative flex flex-col h-full overflow-hidden">
+       {/* 下面是圖片+臭屁星人+emoji*/}
        <img
           src={petGif}
           alt="寵物"
-          className="w-[192px] h-[192px] object-contain absolute z-10 pointer-events-none"
+          className="absolute bottom-4 right-4 w-[192px] h-[192px] object-contain z-10 pointer-events-none"
           style={{ right: '1rem', bottom: '6rem' }}  
           />
+        <div
+      className="absolute flex items-center gap-1 z-20"
+    style={{
+    right : '4rem',   // 與角色齊右
+    bottom: '4.5rem',   // 4rem ≈ 64px，高度略低於角色底
+    fontWeight: 700,
+    fontSize  : '1rem',
+    color     : '#0f172a', // 深灰，可自行改色
+    textShadow: '0 1px 3px rgba(255,255,255,0.8)', // 亮邊讓字在背景上更清晰
+  }}
+>
+  <span>{pet.name}</span>
+  <span style={{ fontSize:'1rem' /* 稍微大一點 */ }}>
+    {getPetEmoji()}
+  </span>
+</div> 
       {/* 上半部：寵物顯示區域 + 狀態條 */}
       <div className="flex-1 overflow-x-hidden overflow-y-auto space-y-6 pb-2 max-h-[calc(100%-100px)]">
         {/* 寵物顯示區域 */}
         <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-6 text-center shadow-lg relative">
-          <div className="text-8xl mb-4 animate-bounce">
-            {getPetEmoji()}
-          </div>
-         
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">{pet.name}</h2>
-          <p className="text-gray-600">等級 {pet.level} • 經驗值 {pet.exp}/100</p>
-          <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-            <div 
-              className="bg-purple-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${(pet.exp % 100)}%` }}
-            />
-          </div>
+          
+          <ExpBar level={pet.level} exp={pet.exp} />
         </div>
   
         {/* 狀態欄 */}
-        <div className="grid grid-cols-1 gap-3">
-          <StatusBar label="健康" value={pet.health} icon={<Heart className="w-4 h-4 text-red-500" />} />
-          <StatusBar label="飢餓" value={pet.hunger} icon={<Utensils className="w-4 h-4 text-orange-500" />} />
-          <StatusBar label="快樂" value={pet.happiness} icon={<Star className="w-4 h-4 text-yellow-500" />} />
-          <StatusBar label="精力" value={pet.energy} icon={<Clock className="w-4 h-4 text-blue-500" />} />
-          <StatusBar label="清潔" value={pet.cleanliness} icon={<Bath className="w-4 h-4 text-cyan-500" />} />
-        </div>
+        <div
+  style={{
+    position :'absolute',
+    left     :'0.75rem',
+    top      :'10rem',     // 想再往下就加大
+    width    :'100px',
+
+    display  :'flex',
+    flexDirection:'column',
+    gap      :'0.5rem',    // 兩框之間間距 8px
+    zIndex   : 50,
+  }}
+>
+  <StatusBox label="健康"  value={pet.health}
+             icon={<Heart    style={{width:14,height:14,color:'#dc2626'}} />} />
+
+  <StatusBox label="飢餓"  value={pet.hunger}
+             icon={<Utensils style={{width:14,height:14,color:'#ea580c'}} />} />
+
+  <StatusBox label="快樂"  value={pet.happiness}
+             icon={<Star     style={{width:14,height:14,color:'#eab308'}} />} />
+
+  <StatusBox label="精力"  value={pet.energy}
+             icon={<Clock    style={{width:14,height:14,color:'#2563eb'}} />} />
+
+  <StatusBox label="清潔"  value={pet.cleanliness}
+             icon={<Bath     style={{width:14,height:14,color:'#06b6d4'}} />} />
+</div>
       </div>
   
-      {/* 下半部：操作按鈕固定在底部上方 */}
+      {/*操作按鈕 下半部：操作按鈕固定在底部上方 */}
       <div className="mt-auto px-4 pb-2">
         <div className="w-full flex justify-between items-center gap-x-2">
           <ActionButton onClick={feedPet} disabled={inventory.food === 0} color="bg-orange-500">
@@ -280,7 +382,7 @@ const VirtualPetGame = () => {
       <h2 className="text-2xl font-bold text-gray-800 mb-4">商店</h2>
       <div className="bg-yellow-100 rounded-lg p-4 mb-4">
         <div className="flex items-center">
-          <Coins className="w-5 h-5 text-yellow-600 mr-2" />
+          <Coins className="w-8 h-5 text-yellow-600 mr-2" />
           <span className="font-bold text-yellow-800">金幣: {pet.coins}</span>
         </div>
       </div>
@@ -370,7 +472,7 @@ const VirtualPetGame = () => {
     <div className="w-screen h-screen flex items-center justify-center bg-gray-200 overflow-hidden">
       {/* 📱 手機框 */}
       <div
-  className="w-[484px] h-[726px] rounded-[2rem] overflow-hidden shadow-xl
+  className="w-[434px] h-[651px] rounded-[2rem] overflow-hidden shadow-xl
              ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
   style={{
     // 只在首頁顯示背景，其餘 view 傳 'none'
@@ -388,27 +490,32 @@ const VirtualPetGame = () => {
           </div>
         )}
   
-        {/* 頂部欄 */}
-        <div className="bg-white/80 p-4 shadow-sm">
-          <div className="flex justify-between items-center">
-            <h1 className="text-xl font-bold text-gray-800">虛擬寵物</h1>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center">
-                <Coins className="w-4 h-4 text-yellow-500 mr-1" />
-                <span className="font-medium">{pet.coins}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+{/* 頂部欄狀態 */}
+<div className="relative bg-white/80 p-4 shadow-sm flex justify-center">
+  {/* 正常流里水平置中 */}
+  <h1 className="text-xl font-bold text-gray-800">
+    虛擬寵物
+  </h1>
+  <div
+  className="absolute top-8 flex items-center space-x-1"
+  style={{ right: '5%' }}  >
+    <Coins style={{color: '#eab308' }}size={32} className="text-yellow-600 mr-2" />
+    <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#eab308' }}>
+  金幣: {pet.coins}
+</span>
+  </div>
+</div>
+
+
   
-        {/* 中間內容，讓它佔滿剩下高度，避免溢出 */}
+        {/* 主要內容區 */}
         <div className="flex-1 overflow-y-auto p-4">
           {currentView === 'home' && <HomeView />}
           {currentView === 'shop' && <ShopView />}
           {currentView === 'stats' && <StatsView />}
         </div>
   
-        {/* ✅ 底部導航「放在 flex 結構的最下層」，不使用 fixed/absolute */}
+        {/*  底部導航 */}
         <div className="bg-white border-t shadow-lg">
           <div className="flex justify-around py-2">
             <button
