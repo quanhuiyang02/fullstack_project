@@ -7,8 +7,8 @@ import eat from './assets/eat.gif';
 const VirtualPetGame = () => {
   // 遊戲狀態
   const [pet, setPet] = useState({
-    name: "小貓咪",
-    type: "cat",
+    name: "Rubi Mori",
+    type: "pet",
     level: 1,
     exp: 0,
     health: 80,
