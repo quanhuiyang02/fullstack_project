@@ -1,8 +1,6 @@
 // src/utils/notificationUtils.js
 
-export const showTempNotification = (setNotification, message, duration = 3000) => {
+export const showNotificationMessage = (setNotification, message) => {
   setNotification(message);
-  setTimeout(() => {
-    setNotification('');
-  }, duration);
+  setTimeout(() => setNotification(''), 3000);
 };

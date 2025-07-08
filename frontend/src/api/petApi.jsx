@@ -8,20 +8,21 @@ const API_BASE_URL = 'http://localhost:8000/api';
  * @returns {Promise<any>} - 解析後的 JSON 數據
  * @throws {Error} - 當網絡響應不為 ok 時拋出錯誤
  */
-export const apiCall = async (endpoint, options = {}) => {
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    // 預設配置
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-    ...options,
-  });
 
-  if (!response.ok) {
-    // 讓調用者去處理 HTTP 錯誤
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
+import axios from 'axios';
 
-  return response.json(); // 回傳解析後的 JSON promise
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:88/api.php';
+
+export const fetchPetData = async (userId) => {
+  const response = await axios.get(`${API_URL}?action=getPet&user=${userId}`);
+  return response.data;
+};
+
+export const updatePetData = async (userId, petData) => {
+  await axios.post(`${API_URL}?action=updatePet`, { user: userId, pet: petData });
+};
+
+export const loginUser = async (username, password) => {
+  const response = await axios.post(`${API_URL}?action=login`, { username, password });
+  return response.data;
 };
