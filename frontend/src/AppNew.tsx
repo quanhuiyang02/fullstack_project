@@ -43,8 +43,13 @@ const VirtualPetGame = () => {
 
   const intervalRef = useRef();
 
-// 成就系統(已搬移achievements)
-
+// 成就系統(靜態資料achievements)
+const staticAchievements = [
+  { id: 'first_feed', name: '第一次餵食', description: '餵食寵物一次', icon: '🍖', unlocked: false },
+  { id: 'first_play', name: '第一次遊戲', description: '和寵物玩耍一次', icon: '🎾', unlocked: false },
+  { id: 'reach_level_5', name: '成長達人', description: '達到等級5', icon: '⭐', unlocked: false },
+  { id: 'earn_500_coins', name: '小富翁', description: '累積500金幣', icon: '💰', unlocked: false }
+];
 
 // 自動狀態衰減()
   useEffect(() => {
@@ -121,7 +126,8 @@ return (
           {currentView === 'shop' && (
             <ShopView pet={pet} buyItem={petActions.buyItem} />
           )}
-          {currentView === 'stats' && <StatsView pet={pet} />}
+          {currentView === 'stats' && 
+            <StatsView pet={pet} achievements={staticAchievements}/>}
         </div>
         
          {/* 底部導航*/}
