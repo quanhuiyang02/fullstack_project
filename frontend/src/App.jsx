@@ -391,14 +391,12 @@ const VirtualPetGame = () => {
         )}
   
         {/* 頂部欄 */}
-        <div className="bg-white/80 p-4 shadow-sm">
+        <div className="bg-white/80 p-4 shadow-sm relative">
           <div className="flex justify-between items-center">
             <h1 className="text-xl font-bold text-gray-800">心寵生活</h1>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center">
-                <Coins className="w-4 h-4 text-yellow-500 mr-1" />
-                <span className="font-medium">{pet.coins}</span>
-              </div>
+            <div className="flex items-center space-x-2 font-bold text-lg" style={{ color: '#eab308' }}>
+              <Coins size={24} />
+              <span>金幣: {pet.coins}</span>
             </div>
           </div>
         </div>
