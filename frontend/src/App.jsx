@@ -390,25 +390,20 @@ const VirtualPetGame = () => {
           </div>
         )}
   
-{/* 頂部欄狀態 */}
-<div className="relative bg-white/80 p-4 shadow-sm flex justify-center">
-  {/* 正常流里水平置中 */}
-  <h1 className="text-xl font-bold text-gray-800">
-    虛擬寵物
-  </h1>
-  <div
-  className="absolute top-8 flex items-center space-x-1"
-  style={{ right: '5%' }}  >
-    <Coins style={{color: '#eab308' }}size={32} className="text-yellow-600 mr-2" />
-    <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#eab308' }}>
-  金幣: {pet.coins}
-</span>
-  </div>
-</div>
-
-
+        {/* 頂部欄 */}
+        <div className="bg-white/80 p-4 shadow-sm">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-bold text-gray-800">心寵生活</h1>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center">
+                <Coins className="w-4 h-4 text-yellow-500 mr-1" />
+                <span className="font-medium">{pet.coins}</span>
+              </div>
+            </div>
+          </div>
+        </div>
   
-        {/* 主要內容區 */}
+        {/* 中間內容，讓它佔滿剩下高度，避免溢出 */}
         <div className="flex-1 overflow-y-auto p-4">
           {currentView === 'home' && <HomeView />}
           {currentView === 'shop' && <ShopView />}
