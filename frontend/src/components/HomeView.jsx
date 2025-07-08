@@ -4,8 +4,13 @@ import { Heart, Utensils, Star, Clock, Bath, Gamepad2 } from 'lucide-react';
 import StatusBar from './StatusBar';
 import ActionButton from './ActionButton';
 import petGif from '../assets/ch.gif';
+import { getPetEmoji } from '../utils/petStatusUtils'; // 若要處理 emoji，可保留
 
-const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet, getPetEmoji }) => {
+const HomeView = ({ pet, inventory, actions }) => {
+  const { feedPet, playWithPet, cleanPet, restPet } = actions;
+
+  const emoji = getPetEmoji(pet); // 傳入 pet
+
   return (
     <div className="flex flex-col flex-1 overflow-hidden relative">
       <img
@@ -17,13 +22,11 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet, get
 
       <div className="flex-1 overflow-x-hidden overflow-y-auto space-y-6 pb-2 max-h-[calc(100%-100px)]">
         <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-6 text-center shadow-lg relative">
-          <div className="text-8xl mb-4 animate-bounce">
-            {getPetEmoji()}
-          </div>
+          <div className="text-8xl mb-4 animate-bounce">{emoji}</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">{pet.name}</h2>
           <p className="text-gray-600">等級 {pet.level} • 經驗值 {pet.exp}/100</p>
           <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-            <div 
+            <div
               className="bg-purple-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${(pet.exp % 100)}%` }}
             />
