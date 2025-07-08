@@ -241,7 +241,7 @@ const VirtualPetGame = () => {
       </div>
     );
   };
-  const StatusBox = ({ label, value, icon }) => (
+  const StatusBar = ({ label, value, icon }) => (
     <div
       /* 外框樣式 */
       style={{
@@ -282,7 +282,7 @@ const VirtualPetGame = () => {
 
   const HomeView = () => (
     <div className="relative flex flex-col h-full overflow-hidden">
-       {/* 下面是圖片+臭屁星人+emoji*/}
+       {/* 下面是圖片+臭屁星人+emoji*/} 
        <img
           src={petGif}
           alt="寵物"
@@ -327,19 +327,19 @@ const VirtualPetGame = () => {
     zIndex   : 50,
   }}
 >
-  <StatusBox label="健康"  value={pet.health}
+  <StatusBar label="健康"  value={pet.health}
              icon={<Heart    style={{width:14,height:14,color:'#dc2626'}} />} />
 
-  <StatusBox label="飢餓"  value={pet.hunger}
+  <StatusBar label="飢餓"  value={pet.hunger}
              icon={<Utensils style={{width:14,height:14,color:'#ea580c'}} />} />
 
-  <StatusBox label="快樂"  value={pet.happiness}
+  <StatusBar label="快樂"  value={pet.happiness}
              icon={<Star     style={{width:14,height:14,color:'#eab308'}} />} />
 
-  <StatusBox label="精力"  value={pet.energy}
+  <StatusBar label="精力"  value={pet.energy}
              icon={<Clock    style={{width:14,height:14,color:'#2563eb'}} />} />
 
-  <StatusBox label="清潔"  value={pet.cleanliness}
+  <StatusBar label="清潔"  value={pet.cleanliness}
              icon={<Bath     style={{width:14,height:14,color:'#06b6d4'}} />} />
 </div>
       </div>
