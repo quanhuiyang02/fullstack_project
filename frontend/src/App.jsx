@@ -2,8 +2,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Heart, Utensils, Gamepad2, Bath, Coins, Star, Clock, Trophy, Home, User, Settings } from 'lucide-react';
 import background from './assets/bg.gif';
-import petGif from './assets/ch.gif';  
-import eat from './assets/eat.gif';  
+import petGif from './assets/ch.gif';
+import eat from './assets/eat.gif'; 
+// 元件
+import HomeView from './components/HomeView';
+import ShopView from './components/ShopView';
+import StatsView from './components/StatsView';
+import { getPetEmoji } from './utils/petStatusUtils';
+import { showNotificationMessage } from './utils/notificationUtils';
+import { usePetStatus } from './hooks/usePetStatus';
+
 const VirtualPetGame = () => {
   // 遊戲狀態
   const [pet, setPet] = useState({
@@ -43,29 +51,26 @@ const VirtualPetGame = () => {
     { id: 'earn_500_coins', name: '小富翁', description: '累積500金幣', icon: '💰', unlocked: false }
   ];
 
-  // 自動狀態衰減
+// 自動狀態衰減
   useEffect(() => {
     intervalRef.current = setInterval(() => {
-      setPet(prev => {
-        const now = Date.now();
-        const timeDiff = (now - prev.lastFed) / (1000 * 60); // 分鐘
-        
+      setPet((prev) => {
         const newPet = {
           ...prev,
           hunger: Math.max(0, prev.hunger - 0.5),
           happiness: Math.max(0, prev.happiness - 0.3),
           energy: Math.max(0, prev.energy - 0.2),
           cleanliness: Math.max(0, prev.cleanliness - 0.4),
-          totalPlayTime: prev.totalPlayTime + 1
+          totalPlayTime: prev.totalPlayTime + 1,
         };
 
         // 健康值根據其他狀態計算
-        const avgStatus = (newPet.hunger + newPet.happiness + newPet.energy + newPet.cleanliness) / 4;
+        const avgStatus =
+          (newPet.hunger + newPet.happiness + newPet.energy + newPet.cleanliness) / 4;
         newPet.health = Math.min(100, Math.max(0, avgStatus));
-
         return newPet;
       });
-    }, 30000); // 每30秒更新一次
+    }, 30000);// 每30秒更新一次
 
     return () => clearInterval(intervalRef.current);
   }, []);

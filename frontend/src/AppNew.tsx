@@ -51,7 +51,7 @@ const staticAchievements = [
   { id: 'earn_500_coins', name: '小富翁', description: '累積500金幣', icon: '💰', unlocked: false }
 ];
 
-// 自動狀態衰減()
+// 自動狀態衰減
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       setPet((prev) => {
@@ -63,12 +63,15 @@ const staticAchievements = [
           cleanliness: Math.max(0, prev.cleanliness - 0.4),
           totalPlayTime: prev.totalPlayTime + 1,
         };
+
+        // 健康值根據其他狀態計算
         const avgStatus =
           (newPet.hunger + newPet.happiness + newPet.energy + newPet.cleanliness) / 4;
         newPet.health = Math.min(100, Math.max(0, avgStatus));
         return newPet;
       });
-    }, 30000);
+    }, 30000);// 每30秒更新一次
+
     return () => clearInterval(intervalRef.current);
   }, []);
 
