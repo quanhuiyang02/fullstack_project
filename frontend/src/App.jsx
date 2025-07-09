@@ -378,7 +378,7 @@ const VirtualPetGame = () => {
   className="w-[434px] h-[651px] rounded-[2rem] overflow-hidden shadow-xl
              ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
   style={{
-    // 在首頁顯示背景
+    // 只在首頁顯示背景，其他"none"
     backgroundImage: currentView === 'home' ? `url(${background})` : 'none',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
