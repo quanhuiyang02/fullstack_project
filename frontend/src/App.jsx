@@ -383,6 +383,14 @@ const VirtualPetGame = () => {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center'
   }}
+style={{
+    // 在商店顯示背景
+    backgroundImage: currentView === 'shop' ? `url(${shopbackground})` : 'none',
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center'
+  }}
+
 >
 
         {/* 通知 */}
