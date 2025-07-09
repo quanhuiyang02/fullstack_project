@@ -3,10 +3,14 @@
 import React from 'react';
 import { Coins } from 'lucide-react';
 import ActionButton from './ActionButton';
+import shopBg from '../assets/shopbg.png'; // ✅ 匯入圖片
 
 const ShopView = ({ pet, buyItem }) => {
   return (
-    <div className="space-y-4">
+    <div
+      className="space-y-4 bg-cover bg-center bg-no-repeat min-h-screen p-4"
+      style={{ backgroundImage: `url(${shopBg})` }} // ✅ 設定背景圖
+    >
       <h2 className="text-2xl font-bold text-gray-800 mb-4">商店</h2>
 
       <div className="bg-yellow-100 rounded-lg p-4 mb-4">
@@ -46,3 +50,4 @@ const ShopView = ({ pet, buyItem }) => {
 };
 
 export default ShopView;
+
