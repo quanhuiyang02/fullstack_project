@@ -378,7 +378,7 @@ const VirtualPetGame = () => {
   className="w-[434px] h-[651px] rounded-[2rem] overflow-hidden shadow-xl
              ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
   style={{
-    // 只在首頁顯示背景，其餘 view 傳 'none'
+    // 在首頁顯示背景
     backgroundImage: currentView === 'home' ? `url(${background})` : 'none',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
@@ -387,6 +387,13 @@ const VirtualPetGame = () => {
 style={{
     // 在商店顯示背景
     backgroundImage: currentView === 'shop' ? `url(${shopbackground})` : 'none',
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center'
+  }}
+  style={{
+    // 在統計頁面顯示背景
+    backgroundImage: currentView === 'stats' ? `url(${statsbackground})` : 'none',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center'
