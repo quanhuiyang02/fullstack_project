@@ -384,13 +384,19 @@ const VirtualPetGame = () => {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center'
   }}
-style={{
+  ></div>
+  <div
+  className="w-[434px] h-[651px]"
+  style={{
     // 在商店顯示背景
     backgroundImage: currentView === 'shop' ? `url(${shopbackground})` : 'none',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center'
   }}
+  ></div>
+  <div
+  className="w-[434px] h-[651px]"
   style={{
     // 在統計頁面顯示背景
     backgroundImage: currentView === 'stats' ? `url(${statsbackground})` : 'none',
