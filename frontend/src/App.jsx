@@ -5,6 +5,7 @@ import background from './assets/bg.gif';
 import petGif from './assets/ch.gif';  
 import eat from './assets/eat.gif';  
 import shopbackground from './assets/shopbg.png';
+import statsbackground from './assets/statsbg.gif';
 
 const VirtualPetGame = () => {
   // 遊戲狀態
