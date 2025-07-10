@@ -234,16 +234,31 @@ const VirtualPetGame = () => {
             {showNotification}
           </div>
         )}
-        {/* 頂部欄 */}
-        <div className="relative bg-white/80 p-4 shadow-sm flex justify-center">
-          <h1 className="text-xl font-bold text-gray-800">心寵生活</h1>
-          <div className="absolute top-8 flex items-center space-x-1" style={{ right: '5%' }}>
-            <Coins style={{ color: '#eab308' }} size={32} className="text-yellow-600 mr-2" />
-            <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#eab308' }}>
-              金幣: {pet.coins}
-            </span>
-          </div>
-        </div>
+       {/* 頂部欄 */}
+<div className="relative bg-white/80 p-4 shadow-sm flex justify-center">
+  {/* 只有非 shop 頁面才顯示標題 */}
+  {currentView !== 'shop' && (
+    <h1 className="text-xl font-bold text-gray-800">心寵生活</h1>
+  )}
+
+  {/* 金幣顯示區 */}
+  <div
+    className="absolute top-8 flex items-center space-x-1"
+    style={{ right: '5%' }}
+  >
+    <Coins style={{ color: '#eab308' }} size={32} className="text-yellow-600 mr-2" />
+    <span
+      style={{
+        fontSize: '1.5rem',
+        fontWeight: 700,
+        color: '#eab308',
+      }}
+    >
+      金幣: {pet.coins}
+    </span>
+  </div>
+</div>
+
         {/* 主要內容區 */}
         <div className="flex-1 overflow-y-auto p-4">
           {currentView === 'home' && <HomeView pet={pet} inventory={inventory} feedPet={feedPet} playWithPet={playWithPet} cleanPet={cleanPet} restPet={restPet} />}
