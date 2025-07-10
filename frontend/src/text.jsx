@@ -59,11 +59,9 @@ import statsbackground from './assets/statsbg.gif';
                  ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
       style={{
         backgroundImage:
-          currentView === 'home'
-            ? `url(${background})`
-            : currentView === 'shop'
-            ? `url(${shopbackground})`
-            : currentView === 'stats'
+          currentView === 
+          'home' ? `url(${background})` : currentView === 'shop'
+            ? `url(${shopbackground})`: currentView === 'stats'
             ? `url(${statsbackground})`
             : 'none',
         backgroundSize: 'contain',

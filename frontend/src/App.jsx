@@ -4,6 +4,8 @@ import { Heart, Utensils, Gamepad2, Bath, Coins, Star, Clock, Trophy, Home, User
 import background from './assets/bg.gif';
 import petGif from './assets/ch.gif';
 import eat from './assets/eat.gif';
+import shopbackground from './assets/shopbg.png';
+import statsbackground from './assets/statsbg.gif';
 // 元件
 import HomeView from './components/HomeView';
 import ShopView from './components/ShopView';
@@ -217,7 +219,10 @@ const VirtualPetGame = () => {
       <div
         className="w-[434px] h-[651px] rounded-[2rem] overflow-hidden shadow-xl ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
         style={{
-          backgroundImage: currentView === 'home' ? `url(${background})` : 'none',
+          backgroundImage: 
+          currentView === 'home' ? `url(${background})` 
+          : currentView === 'shop' ? `url(${shopbackground})` 
+          : currentView === 'stats' ? `url(${statsbackground})` : 'none',
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center'
