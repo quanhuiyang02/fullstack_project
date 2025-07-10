@@ -372,40 +372,31 @@ const VirtualPetGame = () => {
   );
   
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-gray-200 overflow-hidden">
-      {/* 📱 手機框 */}
-      <div
-  className="w-[434px] h-[651px] rounded-[2rem] overflow-hidden shadow-xl
-             ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
-  style={{
-    // 只在首頁顯示背景，其他"none"
-    backgroundImage: currentView === 'home' ? `url(${background})` : 'none',
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
-  }}
-  ></div>
-  <div
-  className="w-[434px] h-[651px]"
-  style={{
-    // 在商店顯示背景
-    backgroundImage: currentView === 'shop' ? `url(${shopbackground})` : 'none',
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
-  }}
-  ></div>
-  <div
-  className="w-[434px] h-[651px]"
-  style={{
-    // 在統計頁面顯示背景
-    backgroundImage: currentView === 'stats' ? `url(${statsbackground})` : 'none',
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
-  }}
+  <div className="w-screen h-screen flex items-center justify-center bg-gray-200 overflow-hidden">
+    {/* 📱 手機框 */}
+    <div
+      className="w-[434px] h-[651px] rounded-[2rem] overflow-hidden shadow-xl
+                 ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
+      style={{
+        backgroundImage:
+          currentView === 'home'
+            ? `url(${background})`
+            : currentView === 'shop'
+            ? `url(${shopbackground})`
+            : currentView === 'stats'
+            ? `url(${statsbackground})`
+            : 'none',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center'
+      }}
+    >
+      {/* 子元件放這裡 */}
+    </div>
+  </div>
+);
 
->
+
 
         {/* 通知 */}
         {showNotification && (
