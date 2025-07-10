@@ -1,5 +1,4 @@
 // src/components/ShopView.jsx
-
 // @ts-nocheck
 import React from 'react';
 import { Coins } from 'lucide-react';
@@ -13,8 +12,6 @@ const ActionButton = ({ onClick, disabled, children }) => (
     {children}
   </button>
 );
-import ActionButton from './ActionButton';
-import shopBg from '../assets/shopbg.png'; // ✅ 匯入圖片
 
 const ShopView = ({ pet, buyItem }) => (
   <div className="space-y-4">
