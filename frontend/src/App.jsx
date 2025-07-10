@@ -10,8 +10,8 @@ import statsbackground from './assets/statsbg.gif';
 import HomeView from './components/HomeView';
 import ShopView from './components/ShopView';
 import StatsView from './components/StatsView';
+import { showNotificationMessage } from './utils/notificationUtils';
 // import { getPetEmoji } from './utils/petStatusUtils';
-// import { showNotificationMessage } from './utils/notificationUtils';
 // import { usePetStatus } from './hooks/usePetStatus';
 
 const VirtualPetGame = () => {
@@ -44,6 +44,9 @@ const VirtualPetGame = () => {
   });
 
   const intervalRef = useRef();
+
+  // 啟用通知函數
+  const notify = (message) => showNotificationMessage(message, setShowNotification);
 
   // 成就系統
   const achievements = [
@@ -85,7 +88,7 @@ const VirtualPetGame = () => {
       const leveledUp = newLevel > prev.level;
       
       if (leveledUp) {
-        showNotificationMessage(`恭喜！${prev.name}升到了等級${newLevel}！`);
+        notify(`恭喜！${prev.name}升到了等級${newLevel}！`);
       }
       
       return {
@@ -97,10 +100,6 @@ const VirtualPetGame = () => {
     });
   };
 
-  const showNotificationMessage = (message) => {
-    setShowNotification(message);
-    setTimeout(() => setShowNotification(''), 3000);
-  };
 
   const feedPet = () => {
     if (inventory.food > 0) {
@@ -112,9 +111,9 @@ const VirtualPetGame = () => {
       }));
       setInventory(prev => ({ ...prev, food: prev.food - 1 }));
       addExp(10);
-      showNotificationMessage(`${pet.name}很開心地吃完了食物！`);
+      notify(`${pet.name}很開心地吃完了食物！`);
     } else {
-      showNotificationMessage('沒有食物了！去商店購買吧！');
+      notify('沒有食物了！去商店購買吧！');
     }
   };
 
@@ -129,9 +128,9 @@ const VirtualPetGame = () => {
       addExp(15);
       const earnedCoins = Math.floor(Math.random() * 10) + 5;
       setPet(prev => ({ ...prev, coins: prev.coins + earnedCoins }));
-      showNotificationMessage(`和${pet.name}玩得很開心！獲得了${earnedCoins}金幣！`);
+      notify(`和${pet.name}玩得很開心！獲得了${earnedCoins}金幣！`);
     } else {
-      showNotificationMessage(`${pet.name}太累了，讓它休息一下吧！`);
+      notify(`${pet.name}太累了，讓它休息一下吧！`);
     }
   };
 
@@ -145,9 +144,9 @@ const VirtualPetGame = () => {
       }));
       setInventory(prev => ({ ...prev, soap: prev.soap - 1 }));
       addExp(8);
-      showNotificationMessage(`${pet.name}現在乾乾淨淨的！`);
+      notify(`${pet.name}現在乾乾淨淨的！`);
     } else {
-      showNotificationMessage('沒有肥皂了！去商店購買吧！');
+      notify('沒有肥皂了！去商店購買吧！');
     }
   };
 
@@ -157,16 +156,16 @@ const VirtualPetGame = () => {
       energy: Math.min(100, prev.energy + 40),
       health: Math.min(100, prev.health + 10)
     }));
-    showNotificationMessage(`${pet.name}睡了個好覺！`);
+    notify(`${pet.name}睡了個好覺！`);
   };
 
   const buyItem = (item, cost) => {
     if (pet.coins >= cost) {
       setPet(prev => ({ ...prev, coins: prev.coins - cost }));
       setInventory(prev => ({ ...prev, [item]: prev[item] + 1 }));
-      showNotificationMessage(`購買了${item === 'food' ? '食物' : item === 'soap' ? '肥皂' : '玩具'}！`);
+      notify(`購買了${item === 'food' ? '食物' : item === 'soap' ? '肥皂' : '玩具'}！`);
     } else {
-      showNotificationMessage('金幣不足！');
+      notify('金幣不足！');
     }
   };
 
