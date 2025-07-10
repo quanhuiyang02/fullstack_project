@@ -223,9 +223,9 @@ const VirtualPetGame = () => {
           currentView === 'home' ? `url(${background})` 
           : currentView === 'shop' ? `url(${shopbackground})` 
           : currentView === 'stats' ? `url(${statsbackground})` : 'none',
-          backgroundSize: 'contain',
+          backgroundSize: 'cover',           // 滿版不留白
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center'
+           backgroundPosition: 'center center'   // 垂直水平置中
         }}
       >
         {/* 通知 */}
