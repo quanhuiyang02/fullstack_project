@@ -99,7 +99,6 @@ const VirtualPetGame = () => {
     });
   };
 
-
   const feedPet = () => {
     if (inventory.food > 0) {
       setPet(prev => ({
@@ -167,35 +166,6 @@ const VirtualPetGame = () => {
       notify('金幣不足！');
     }
   };
-
-
-  // const StatusBar = ({ label, value, icon, color }) => (
-  //   <div className="bg-white rounded-lg p-3 shadow-sm">
-  //     <div className="flex items-center justify-between mb-2">
-  //       <div className="flex items-center space-x-2">
-  //         {icon}
-  //         <span className="text-sm font-medium text-gray-700">{label}</span>
-  //       </div>
-  //       <span className="text-sm font-bold">{Math.round(value)}%</span>
-  //     </div>
-  //     <div className="w-full bg-gray-200 rounded-full h-2">
-  //       <div 
-  //         className={`h-2 rounded-full transition-all duration-300 ${getStatusColor(value)}`}
-  //         style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
-  //       />
-  //     </div>
-  //   </div>
-  // );
-
-  // const ActionButton = ({ onClick, disabled, children, color = "bg-blue-500" }) => (
-  //   <button
-  //     onClick={onClick}
-  //     disabled={disabled}
-  //     className={`${color} text-white px-2 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 shadow-lg`}
-  //   >
-  //     {children}
-  //   </button>
-  // );
 
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-gray-200 overflow-hidden">

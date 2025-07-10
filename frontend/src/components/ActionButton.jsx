@@ -1,4 +1,4 @@
-// src/components/ShopView.jsx
+// src/components/ActionButton.jsx
 
 import React from 'react';
 
