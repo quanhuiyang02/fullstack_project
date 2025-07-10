@@ -213,7 +213,7 @@ const VirtualPetGame = () => {
 
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-gray-200 overflow-hidden">
-      {/* 只在首頁顯示背景，其餘 view 傳 'none' */}
+      {/* 📱 手機框 */}
       <div
         className="w-[434px] h-[651px] rounded-[2rem] overflow-hidden shadow-xl ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
         style={{
