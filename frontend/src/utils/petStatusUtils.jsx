@@ -6,11 +6,11 @@ export const getStatusColor = (value) => {
   return 'bg-red-500';
 };
 
-export const getPetEmoji = ({ health, hunger, happiness, energy, cleanliness }) => {
-  if (health < 30) return '😵';
-  if (hunger < 30) return '😋';
-  if (happiness < 30) return '😢';
-  if (energy < 30) return '😴';
-  if (cleanliness < 30) return '🤢';
+export const getPetEmoji = (pet) => {
+  if (pet.health < 30) return '😵';
+  if (pet.hunger < 30) return '😋';
+  if (pet.happiness < 30) return '😢';
+  if (pet.energy < 30) return '😴';
+  if (pet.cleanliness < 30) return '🤢';
   return '😊';
 };

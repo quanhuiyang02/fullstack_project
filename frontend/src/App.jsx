@@ -11,7 +11,6 @@ import HomeView from './components/HomeView';
 import ShopView from './components/ShopView';
 import StatsView from './components/StatsView';
 import { showNotificationMessage } from './utils/notificationUtils';
-// import { getPetEmoji } from './utils/petStatusUtils';
 // import { usePetStatus } from './hooks/usePetStatus';
 
 const VirtualPetGame = () => {
@@ -169,20 +168,6 @@ const VirtualPetGame = () => {
     }
   };
 
-  // const getStatusColor = (value) => {
-  //   if (value >= 70) return 'bg-green-500';
-  //   if (value >= 40) return 'bg-yellow-500';
-  //   return 'bg-red-500';
-  // };
-
-  // const getPetEmoji = () => {
-  //   if (pet.health < 30) return '😵';
-  //   if (pet.hunger < 30) return '😋';
-  //   if (pet.happiness < 30) return '😢';
-  //   if (pet.energy < 30) return '😴';
-  //   if (pet.cleanliness < 30) return '🤢';
-  //   return '😊';
-  // };
 
   // const StatusBar = ({ label, value, icon, color }) => (
   //   <div className="bg-white rounded-lg p-3 shadow-sm">

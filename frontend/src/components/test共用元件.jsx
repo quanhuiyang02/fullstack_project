@@ -15,13 +15,6 @@ export const getPetEmoji = (pet) => {
   return '😊';
 };
 
-// src/utils/notificationUtils.js
-
-export const showNotificationMessage = (message, setShowNotification) => {
-  setShowNotification(message);
-  setTimeout(() => setShowNotification(''), 3000);
-};
-
 // src/components/common/StatusBar.jsx
 import React from 'react';
 import { getStatusColor } from '../../utils/petStatusUtils';
@@ -61,8 +54,6 @@ const ActionButton = ({ onClick, disabled, children, color = "bg-blue-500" }) =>
 
 export default ActionButton;
 
-// ✅ 修改 App.jsx 載入 showNotificationMessage
-// import { showNotificationMessage } from './utils/notificationUtils';
 
 // ✅ 修改 HomeView.jsx 引入 StatusBar、ActionButton、getPetEmoji
 // import StatusBar from './common/StatusBar';

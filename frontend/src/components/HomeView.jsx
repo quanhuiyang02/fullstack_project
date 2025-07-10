@@ -3,14 +3,11 @@
 import React from 'react';
 import { Heart, Utensils, Gamepad2, Bath, Star, Clock } from 'lucide-react';
 import petGif from '../assets/ch.gif';
+import { getPetEmoji } from '../utils/petStatusUtils';
+import { getStatusColor } from '../utils/petStatusUtils';
 
 // 共用元件
 const StatusBar = ({ label, value, icon, color }) => {
-  const getStatusColor = (value) => {
-    if (value >= 70) return 'bg-green-500';
-    if (value >= 40) return 'bg-yellow-500';
-    return 'bg-red-500';
-  };
 
   return (
     <div className="bg-white rounded-lg p-3 shadow-sm">
@@ -42,15 +39,7 @@ const ActionButton = ({ onClick, disabled, children, color = "bg-blue-500" }) =>
 );
 
 const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) => {
-  const getPetEmoji = () => {
-    if (pet.health < 30) return '😵';
-    if (pet.hunger < 30) return '😋';
-    if (pet.happiness < 30) return '😢';
-    if (pet.energy < 30) return '😴';
-    if (pet.cleanliness < 30) return '🤢';
-    return '😊';
-  };
-
+  
   return (
     <div className="relative flex flex-col h-full overflow-hidden">
       <img
@@ -61,7 +50,7 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) =
       />
       <div className="flex-1 overflow-x-hidden overflow-y-auto space-y-6 pb-2 max-h-[calc(100%-100px)]">
         <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-6 text-center shadow-lg relative">
-          <div className="text-8xl mb-4 animate-bounce">{getPetEmoji()}</div>
+          <div className="text-8xl mb-4 animate-bounce">{getPetEmoji(pet)}</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">{pet.name}</h2>
           <p className="text-[2rem] font-bold" style={{ color: '#ec4899' }}>
             Lv: {pet.level} • EXP: {pet.exp}/100
