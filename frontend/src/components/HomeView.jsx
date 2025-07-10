@@ -3,6 +3,7 @@
 import React from 'react';
 import { Heart, Utensils, Gamepad2, Bath, Star, Clock } from 'lucide-react';
 import petGif from '../assets/ch.gif';
+import eat from'../assets/eat.gif';
 
 // 共用元件
 const StatusBar = ({ label, value, icon, color }) => {
