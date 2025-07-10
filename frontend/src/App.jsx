@@ -13,7 +13,7 @@ import StatsView from './components/StatsView';
 // import { getPetEmoji } from './utils/petStatusUtils';
 // import { showNotificationMessage } from './utils/notificationUtils';
 // import { usePetStatus } from './hooks/usePetStatus';
-import React, { useState } from 'react';
+
 import background from './assets/bg.gif';
 import petGif from './assets/ch.gif';
 import eat from './assets/eat.gif';
