@@ -11,6 +11,7 @@ import HomeView from './components/HomeView';
 import ShopView from './components/ShopView';
 import StatsView from './components/StatsView';
 import { showNotificationMessage } from './utils/notificationUtils';
+import { handleLevelUp } from './utils/expUtils';
 // import { usePetStatus } from './hooks/usePetStatus';
 
 const VirtualPetGame = () => {
@@ -55,48 +56,33 @@ const VirtualPetGame = () => {
     { id: 'earn_500_coins', name: '小富翁', description: '累積500金幣', icon: '💰', unlocked: false }
   ];
 
-// 自動狀態衰減
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setPet((prev) => {
-        const newPet = {
-          ...prev,
-          hunger: Math.max(0, prev.hunger - 0.5),
-          happiness: Math.max(0, prev.happiness - 0.3),
-          energy: Math.max(0, prev.energy - 0.2),
-          cleanliness: Math.max(0, prev.cleanliness - 0.4),
-          totalPlayTime: prev.totalPlayTime + 1,
-        };
+  // 自動狀態衰減
+    useEffect(() => {
+      intervalRef.current = setInterval(() => {
+        setPet((prev) => {
+          const newPet = {
+            ...prev,
+            hunger: Math.max(0, prev.hunger - 0.5),
+            happiness: Math.max(0, prev.happiness - 0.3),
+            energy: Math.max(0, prev.energy - 0.2),
+            cleanliness: Math.max(0, prev.cleanliness - 0.4),
+            totalPlayTime: prev.totalPlayTime + 1,
+          };
 
-        // 健康值根據其他狀態計算
-        const avgStatus =
-          (newPet.hunger + newPet.happiness + newPet.energy + newPet.cleanliness) / 4;
-        newPet.health = Math.min(100, Math.max(0, avgStatus));
-        return newPet;
-      });
-    }, 30000);// 每30秒更新一次
+          // 健康值根據其他狀態計算
+          const avgStatus =
+            (newPet.hunger + newPet.happiness + newPet.energy + newPet.cleanliness) / 4;
+          newPet.health = Math.min(100, Math.max(0, avgStatus));
+          return newPet;
+        });
+      }, 30000);// 每30秒更新一次
 
-    return () => clearInterval(intervalRef.current);
-  }, []);
+      return () => clearInterval(intervalRef.current);
+    }, []);
 
   // 經驗值和等級系統
   const addExp = (amount) => {
-    setPet(prev => {
-      const newExp = prev.exp + amount;
-      const newLevel = Math.floor(newExp / 100) + 1;
-      const leveledUp = newLevel > prev.level;
-      
-      if (leveledUp) {
-        notify(`恭喜！${prev.name}升到了等級${newLevel}！`);
-      }
-      
-      return {
-        ...prev,
-        exp: newExp,
-        level: newLevel,
-        coins: leveledUp ? prev.coins + 50 : prev.coins
-      };
-    });
+    setPet(prev => handleLevelUp(prev, amount, notify));
   };
 
   const feedPet = () => {
