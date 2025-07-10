@@ -371,6 +371,7 @@ const VirtualPetGame = () => {
     </div>
   );
   
+  
   return (
   <div className="w-screen h-screen flex items-center justify-center bg-gray-200 overflow-hidden">
     {/* 📱 手機框 */}
