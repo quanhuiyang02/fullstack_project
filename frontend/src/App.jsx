@@ -12,6 +12,7 @@ import ShopView from './components/ShopView';
 import StatsView from './components/StatsView';
 import { showNotificationMessage } from './utils/notificationUtils';
 import { handleLevelUp } from './utils/expUtils';
+// import { buyItem as buyItemHandler } from './utils/buyItemUtils';
 // import { usePetStatus } from './hooks/usePetStatus';
 
 const VirtualPetGame = () => {
