@@ -2,10 +2,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Heart, Utensils, Gamepad2, Bath, Coins, Star, Clock, Trophy, Home, User, Settings } from 'lucide-react';
 import background from './assets/bg.gif';
-import petGif from './assets/ch.gif';  
-import eat from './assets/eat.gif';  
-import shopbackground from './assets/shopbg.png';
-import statsbackground from './assets/statsbg.gif';
+import petGif from './assets/ch.gif';
+import eat from './assets/eat.gif';
+// 元件
+import HomeView from './components/HomeView';
+import ShopView from './components/ShopView';
+import StatsView from './components/StatsView';
+// import { getPetEmoji } from './utils/petStatusUtils';
+// import { showNotificationMessage } from './utils/notificationUtils';
+// import { usePetStatus } from './hooks/usePetStatus';
 
 const VirtualPetGame = () => {
   // 遊戲狀態
@@ -46,29 +51,26 @@ const VirtualPetGame = () => {
     { id: 'earn_500_coins', name: '小富翁', description: '累積500金幣', icon: '💰', unlocked: false }
   ];
 
-  // 自動狀態衰減
+// 自動狀態衰減
   useEffect(() => {
     intervalRef.current = setInterval(() => {
-      setPet(prev => {
-        const now = Date.now();
-        const timeDiff = (now - prev.lastFed) / (1000 * 60); // 分鐘
-        
+      setPet((prev) => {
         const newPet = {
           ...prev,
           hunger: Math.max(0, prev.hunger - 0.5),
           happiness: Math.max(0, prev.happiness - 0.3),
           energy: Math.max(0, prev.energy - 0.2),
           cleanliness: Math.max(0, prev.cleanliness - 0.4),
-          totalPlayTime: prev.totalPlayTime + 1
+          totalPlayTime: prev.totalPlayTime + 1,
         };
 
         // 健康值根據其他狀態計算
-        const avgStatus = (newPet.hunger + newPet.happiness + newPet.energy + newPet.cleanliness) / 4;
+        const avgStatus =
+          (newPet.hunger + newPet.happiness + newPet.energy + newPet.cleanliness) / 4;
         newPet.health = Math.min(100, Math.max(0, avgStatus));
-
         return newPet;
       });
-    }, 30000); // 每30秒更新一次
+    }, 30000);// 每30秒更新一次
 
     return () => clearInterval(intervalRef.current);
   }, []);
@@ -166,271 +168,83 @@ const VirtualPetGame = () => {
     }
   };
 
-  const getStatusColor = (value) => {
-    if (value >= 70) return 'bg-green-500';
-    if (value >= 40) return 'bg-yellow-500';
-    return 'bg-red-500';
-  };
+  // const getStatusColor = (value) => {
+  //   if (value >= 70) return 'bg-green-500';
+  //   if (value >= 40) return 'bg-yellow-500';
+  //   return 'bg-red-500';
+  // };
 
-  const getPetEmoji = () => {
-    if (pet.health < 30) return '😵';
-    if (pet.hunger < 30) return '😋';
-    if (pet.happiness < 30) return '😢';
-    if (pet.energy < 30) return '😴';
-    if (pet.cleanliness < 30) return '🤢';
-    return '😊';
-  };
+  // const getPetEmoji = () => {
+  //   if (pet.health < 30) return '😵';
+  //   if (pet.hunger < 30) return '😋';
+  //   if (pet.happiness < 30) return '😢';
+  //   if (pet.energy < 30) return '😴';
+  //   if (pet.cleanliness < 30) return '🤢';
+  //   return '😊';
+  // };
 
-  const StatusBar = ({ label, value, icon, color }) => (
-    <div className="bg-white rounded-lg p-3 shadow-sm">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center space-x-2">
-          {icon}
-          <span className="text-sm font-medium text-gray-700">{label}</span>
-        </div>
-        <span className="text-sm font-bold">{Math.round(value)}%</span>
-      </div>
-      <div className="w-full bg-gray-200 rounded-full h-2">
-        <div 
-          className={`h-2 rounded-full transition-all duration-300 ${getStatusColor(value)}`}
-          style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
-        />
-      </div>
-    </div>
-  );
+  // const StatusBar = ({ label, value, icon, color }) => (
+  //   <div className="bg-white rounded-lg p-3 shadow-sm">
+  //     <div className="flex items-center justify-between mb-2">
+  //       <div className="flex items-center space-x-2">
+  //         {icon}
+  //         <span className="text-sm font-medium text-gray-700">{label}</span>
+  //       </div>
+  //       <span className="text-sm font-bold">{Math.round(value)}%</span>
+  //     </div>
+  //     <div className="w-full bg-gray-200 rounded-full h-2">
+  //       <div 
+  //         className={`h-2 rounded-full transition-all duration-300 ${getStatusColor(value)}`}
+  //         style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
+  //       />
+  //     </div>
+  //   </div>
+  // );
 
-  const ActionButton = ({ onClick, disabled, children, color = "bg-blue-500" }) => (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`${color} text-white px-2 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 shadow-lg`}
-    >
-      {children}
-    </button>
-  );
+  // const ActionButton = ({ onClick, disabled, children, color = "bg-blue-500" }) => (
+  //   <button
+  //     onClick={onClick}
+  //     disabled={disabled}
+  //     className={`${color} text-white px-2 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 shadow-lg`}
+  //   >
+  //     {children}
+  //   </button>
+  // );
 
-  const HomeView = () => (
-    <div className="relative flex flex-col h-full overflow-hidden">
-       <img
-          src={petGif}
-          alt="寵物"
-          className="absolute bottom-4 right-4 w-[192px] h-[192px] object-contain z-10 pointer-events-none"
-          style={{ right: '1rem', bottom: '6rem' }}  
-          />
-      {/* 上半部：寵物顯示區域 + 狀態條 */}
-      <div className="flex-1 overflow-x-hidden overflow-y-auto space-y-6 pb-2 max-h-[calc(100%-100px)]">
-        {/* 寵物顯示區域 */}
-        <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-6 text-center shadow-lg relative">
-          <div className="text-8xl mb-4 animate-bounce" size={40}>
-            {getPetEmoji()}
-          </div>
-         
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">{pet.name}</h2>
-          <p className="text-[2rem] font-bold "
-          style={{ fontSize: '2rem', fontWeight: '700', color: '#ec4899' }}
-          >Lv: {pet.level} • EXP: {pet.exp}/100</p>
-          <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-            <div 
-              className="bg-purple-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${(pet.exp % 100)}%` }}
-            />
-          </div>
-        </div>
-  
-        {/* 狀態欄 */}
-        <div className="grid grid-cols-1 gap-3">
-          <StatusBar label="健康" value={pet.health} icon={<Heart className="w-4 h-4 text-red-500" />} />
-          <StatusBar label="飢餓" value={pet.hunger} icon={<Utensils className="w-4 h-4 text-orange-500" />} />
-          <StatusBar label="快樂" value={pet.happiness} icon={<Star className="w-4 h-4 text-yellow-500" />} />
-          <StatusBar label="精力" value={pet.energy} icon={<Clock className="w-4 h-4 text-blue-500" />} />
-          <StatusBar label="清潔" value={pet.cleanliness} icon={<Bath className="w-4 h-4 text-cyan-500" />} />
-        </div>
-      </div>
-  
-      {/*操作按鈕 下半部：操作按鈕固定在底部上方 */}
-      <div className="mt-auto px-4 pb-2">
-        <div className="w-full flex justify-between items-center gap-x-2">
-          <ActionButton onClick={feedPet} disabled={inventory.food === 0} color="bg-orange-500">
-            <div className="flex flex-col items-center text-xs">
-              <Utensils className="w-5 h-5 mb-1" />
-              餵食
-            </div>
-          </ActionButton>
-          <ActionButton onClick={playWithPet} disabled={pet.energy < 20} color="bg-green-500">
-            <div className="flex flex-col items-center text-xs">
-              <Gamepad2 className="w-5 h-5 mb-1" />
-              遊戲
-            </div>
-          </ActionButton>
-          <ActionButton onClick={cleanPet} disabled={inventory.soap === 0} color="bg-cyan-500">
-            <div className="flex flex-col items-center text-xs">
-              <Bath className="w-5 h-5 mb-1" />
-              清潔
-            </div>
-          </ActionButton>
-          <ActionButton onClick={restPet} color="bg-purple-500">
-            <div className="flex flex-col items-center text-xs">
-              <Clock className="w-5 h-5 mb-1" />
-              休息
-            </div>
-          </ActionButton>
-        </div>
-      </div>
-    </div>
-  );
-  
-
-  const ShopView = () => (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">商店</h2>
-      <div className="bg-yellow-100 rounded-lg p-4 mb-4">
-        <div className="flex items-center">
-          <Coins className="w-8 h-5 text-yellow-600 mr-2" />
-          <span className="font-bold text-yellow-800">金幣: {pet.coins}</span>
-        </div>
-      </div>
-      
-      <div className="space-y-3">
-        <div className="bg-white rounded-lg p-4 shadow-sm flex justify-between items-center">
-          <div>
-            <h3 className="font-medium">🍖 寵物食物</h3>
-            <p className="text-sm text-gray-600">恢復25點飢餓值</p>
-          </div>
-          <ActionButton onClick={() => buyItem('food', 20)} disabled={pet.coins < 20}>
-            20金幣
-          </ActionButton>
-        </div>
-        
-        <div className="bg-white rounded-lg p-4 shadow-sm flex justify-between items-center">
-          <div>
-            <h3 className="font-medium">🧼 清潔用品</h3>
-            <p className="text-sm text-gray-600">恢復30點清潔值</p>
-          </div>
-          <ActionButton onClick={() => buyItem('soap', 15)} disabled={pet.coins < 15}>
-            15金幣
-          </ActionButton>
-        </div>
-        
-        <div className="bg-white rounded-lg p-4 shadow-sm flex justify-between items-center">
-          <div>
-            <h3 className="font-medium">🎾 玩具</h3>
-            <p className="text-sm text-gray-600">增加遊戲樂趣</p>
-          </div>
-          <ActionButton onClick={() => buyItem('toys', 25)} disabled={pet.coins < 25}>
-            25金幣
-          </ActionButton>
-        </div>
-      </div>
-    </div>
-  );
-
-  const StatsView = () => (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">統計</h2>
-      
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-white rounded-lg p-4 shadow-sm text-center">
-          <div className="text-2xl font-bold text-blue-600">{pet.level}</div>
-          <div className="text-sm text-gray-600">等級</div>
-        </div>
-        
-        <div className="bg-white rounded-lg p-4 shadow-sm text-center">
-          <div className="text-2xl font-bold text-green-600">{pet.coins}</div>
-          <div className="text-sm text-gray-600">金幣</div>
-        </div>
-        
-        <div className="bg-white rounded-lg p-4 shadow-sm text-center">
-          <div className="text-2xl font-bold text-purple-600">{Math.floor(pet.totalPlayTime / 60)}</div>
-          <div className="text-sm text-gray-600">遊戲時間(分)</div>
-        </div>
-        
-        <div className="bg-white rounded-lg p-4 shadow-sm text-center">
-          <div className="text-2xl font-bold text-orange-600">{pet.exp}</div>
-          <div className="text-sm text-gray-600">總經驗值</div>
-        </div>
-      </div>
-
-      <div className="bg-white rounded-lg p-4 shadow-sm">
-        <h3 className="font-bold mb-3 flex items-center">
-          <Trophy className="w-5 h-5 mr-2 text-yellow-500" />
-          成就
-        </h3>
-        <div className="space-y-2">
-          {achievements.map(achievement => (
-            <div key={achievement.id} className="flex items-center p-2 bg-gray-50 rounded">
-              <span className="text-2xl mr-3">{achievement.icon}</span>
-              <div className="flex-1">
-                <div className="font-medium">{achievement.name}</div>
-                <div className="text-sm text-gray-600">{achievement.description}</div>
-              </div>
-              <div className={`w-4 h-4 rounded-full ${achievement.unlocked ? 'bg-green-500' : 'bg-gray-300'}`} />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-  
-  
   return (
-  <div className="w-screen h-screen flex items-center justify-center bg-gray-200 overflow-hidden">
-    {/* 📱 手機框 */}
-    <div
-      className="w-[434px] h-[651px] rounded-[2rem] overflow-hidden shadow-xl
-                 ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
-      style={{
-        backgroundImage:
-          currentView === 'home'
-            ? `url(${background})`
-            : currentView === 'shop'
-            ? `url(${shopbackground})`
-            : currentView === 'stats'
-            ? `url(${statsbackground})`
-            : 'none',
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center'
-      }}
-    >
-      {/* 子元件放這裡 */}
-    </div>
-  </div>
-);
-
-
-
+    <div className="w-screen h-screen flex items-center justify-center bg-gray-200 overflow-hidden">
+      {/* 📱 手機框 */}
+      <div
+        className="w-[434px] h-[651px] rounded-[2rem] overflow-hidden shadow-xl ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
+        style={{
+          backgroundImage: currentView === 'home' ? `url(${background})` : 'none',
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center'
+        }}
+      >
         {/* 通知 */}
         {showNotification && (
           <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-pulse">
             {showNotification}
           </div>
         )}
-  
-{/* 頂部欄狀態 */}
-<div className="relative bg-white/80 p-4 shadow-sm flex justify-center">
-  {/* 正常流里水平置中 */}
-  <h1 className="text-xl font-bold text-gray-800">
-  心寵生活
-  </h1>
-  <div
-  className="absolute top-8 flex items-center space-x-1"
-  style={{ right: '5%' }}  >
-    <Coins style={{color: '#eab308' }}size={32} className="text-yellow-600 mr-2" />
-    <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#eab308' }}>
-  金幣: {pet.coins}
-</span>
-  </div>
-</div>
-
-
-  
+        {/* 頂部欄 */}
+        <div className="relative bg-white/80 p-4 shadow-sm flex justify-center">
+          <h1 className="text-xl font-bold text-gray-800">心寵生活</h1>
+          <div className="absolute top-8 flex items-center space-x-1" style={{ right: '5%' }}>
+            <Coins style={{ color: '#eab308' }} size={32} className="text-yellow-600 mr-2" />
+            <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#eab308' }}>
+              金幣: {pet.coins}
+            </span>
+          </div>
+        </div>
         {/* 主要內容區 */}
         <div className="flex-1 overflow-y-auto p-4">
-          {currentView === 'home' && <HomeView />}
-          {currentView === 'shop' && <ShopView />}
-          {currentView === 'stats' && <StatsView />}
+          {currentView === 'home' && <HomeView pet={pet} inventory={inventory} feedPet={feedPet} playWithPet={playWithPet} cleanPet={cleanPet} restPet={restPet} />}
+          {currentView === 'shop' && <ShopView pet={pet} buyItem={buyItem} />}
+          {currentView === 'stats' && <StatsView pet={pet} achievements={achievements} />}
         </div>
-  
         {/*  底部導航 */}
         <div className="bg-white border-t shadow-lg">
           <div className="flex justify-around py-2">
@@ -468,45 +282,5 @@ const VirtualPetGame = () => {
       </div>
     </div>
   );
-  
-  
-  
 };
-
 export default VirtualPetGame;
-
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vite.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
-
-// export default App
