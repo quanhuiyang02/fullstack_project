@@ -46,7 +46,14 @@ const ActionButton = ({ onClick, disabled, children, color = "bg-blue-500" }) =>
 );
 
 const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) => {
-  
+  //新增動畫狀態
+  const [petAnim, setPetAnim] = useState('idle');
+  /* ③ 包一層 handleFeed：先切動畫再呼叫父層 feedPet */
+  const handleFeed = () => {
+    setPetAnim('eating');   // 顯示吃飯 GIF
+    feedPet();              // 執行原本餵食
+    setTimeout(() => setPetAnim('idle'), 4000); // 2.5秒後切回
+  };
   const getPetEmoji = () => {
     if (pet.health < 30) return '😵';
     if (pet.hunger < 30) return '😋';
