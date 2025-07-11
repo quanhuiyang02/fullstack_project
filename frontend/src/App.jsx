@@ -6,6 +6,10 @@ import petGif from './assets/ch.gif';
 import eat from './assets/eat.gif';
 import shopbackground from './assets/shopbg.png';
 import statsbackground from './assets/statsbg.gif';
+import clickSound from './assets/click.mp3';
+import magicSound from './assets/magic.mp3';
+import coinSound from './assets/coin.mp3';
+import bgm from './assets/bgm.mp3';
 // 元件
 import HomeView from './components/HomeView';
 import ShopView from './components/ShopView';
@@ -229,4 +233,5 @@ const VirtualPetGame = () => {
     </div>
   );
 };
+
 export default VirtualPetGame;
