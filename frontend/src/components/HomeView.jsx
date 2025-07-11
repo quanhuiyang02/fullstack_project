@@ -1,12 +1,15 @@
 // src/components/HomeView.jsx
 // @ts-nocheck
-import React from 'react';
+
+//刪除import React from 'react'; 改成以下
+import React, { useState } from 'react';
 import { Heart, Utensils, Gamepad2, Bath, Star, Clock } from 'lucide-react';
 import petGif from '../assets/ch.gif';
 import eat from'../assets/eat.gif';
 
 // 共用元件
 const StatusBar = ({ label, value, icon, color }) => {
+  
   const getStatusColor = (value) => {
     if (value >= 70) return 'bg-green-500';
     if (value >= 40) return 'bg-yellow-500';
@@ -43,6 +46,7 @@ const ActionButton = ({ onClick, disabled, children, color = "bg-blue-500" }) =>
 );
 
 const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) => {
+  
   const getPetEmoji = () => {
     if (pet.health < 30) return '😵';
     if (pet.hunger < 30) return '😋';
@@ -55,7 +59,8 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) =
   return (
     <div className="relative flex flex-col h-full overflow-hidden">
       <img
-        src={petGif}
+        //刪除src={petGif}改為以下
+        src={petAnim === 'eating' ? eat : petGif}
         alt="寵物"
         className="absolute bottom-4 right-4 w-[192px] h-[192px] object-contain z-10 pointer-events-none"
         style={{ right: '1rem', bottom: '6rem' }}
@@ -86,7 +91,7 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) =
 
       <div className="mt-auto px-4 pb-2">
         <div className="w-full flex justify-between items-center gap-x-2">
-          <ActionButton onClick={feedPet} disabled={inventory.food === 0} color="bg-orange-500">
+          <ActionButton onClick={handleFeed} disabled={inventory.food === 0} color="bg-orange-500">
             <div className="flex flex-col items-center text-xs">
               <Utensils className="w-5 h-5 mb-1" />
               餵食
