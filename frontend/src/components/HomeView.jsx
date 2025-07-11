@@ -1,66 +1,23 @@
 // src/components/HomeView.jsx
 // @ts-nocheck
-
-//刪除import React from 'react'; 改成以下
 import React, { useState } from 'react';
 import { Heart, Utensils, Gamepad2, Bath, Star, Clock } from 'lucide-react';
 import petGif from '../assets/ch.gif';
 import eat from'../assets/eat.gif';
-
-// 共用元件
-const StatusBar = ({ label, value, icon, color }) => {
-  
-  const getStatusColor = (value) => {
-    if (value >= 70) return 'bg-green-500';
-    if (value >= 40) return 'bg-yellow-500';
-    return 'bg-red-500';
-  };
-
-  return (
-    <div className="bg-white rounded-lg p-3 shadow-sm">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center space-x-2">
-          {icon}
-          <span className="text-sm font-medium text-gray-700">{label}</span>
-        </div>
-        <span className="text-sm font-bold">{Math.round(value)}%</span>
-      </div>
-      <div className="w-full bg-gray-200 rounded-full h-2">
-        <div
-          className={`h-2 rounded-full transition-all duration-300 ${getStatusColor(value)}`}
-          style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
-        />
-      </div>
-    </div>
-  );
-};
-
-const ActionButton = ({ onClick, disabled, children, color = "bg-blue-500" }) => (
-  <button
-    onClick={onClick}
-    disabled={disabled}
-    className={`${color} text-white px-2 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 shadow-lg`}
-  >
-    {children}
-  </button>
-);
+import StatusBar from './StatusBar';
+import ActionButton from './ActionButton';
+import { getPetEmoji } from '../utils/petEmoji';
 
 const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) => {
   //新增動畫狀態
+ 
   const [petAnim, setPetAnim] = useState('idle');
   /* ③ 包一層 handleFeed：先切動畫再呼叫父層 feedPet */
+ 
   const handleFeed = () => {
     setPetAnim('eating');   // 顯示吃飯 GIF
     feedPet();              // 執行原本餵食
     setTimeout(() => setPetAnim('idle'), 4000); // 2.5秒後切回
-  };
-  const getPetEmoji = () => {
-    if (pet.health < 30) return '😵';
-    if (pet.hunger < 30) return '😋';
-    if (pet.happiness < 30) return '😢';
-    if (pet.energy < 30) return '😴';
-    if (pet.cleanliness < 30) return '🤢';
-    return '😊';
   };
 
   return (

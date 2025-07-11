@@ -173,77 +173,76 @@ const VirtualPetGame = () => {
            backgroundPosition: 'center center'   // 垂直水平置中
         }}
       >
-        {/* 通知 */}
-        {showNotification && (
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-pulse">
-            {showNotification}
-          </div>
-        )}
+      {/* 通知 */}
+      {showNotification && (
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-pulse">
+          {showNotification}
+        </div>
+      )}
        {/* 頂部欄 */}
-<div className="relative bg-white/80 p-4 shadow-sm flex justify-center">
-  {/* 只有非 shop 頁面才顯示標題 */}
-  {currentView !== 'shop' && (
-    <h1 className="text-xl font-bold text-gray-800">心寵生活</h1>
-  )}
+      <div className="relative bg-white/80 p-4 shadow-sm flex justify-center">
+        {/* 只有非 shop 頁面才顯示標題 */}
+        {currentView !== 'shop' && (
+          <h1 className="text-xl font-bold text-gray-800">心寵生活</h1>
+        )}
 
-  {/* 金幣顯示區 */}
-  <div
-    className="absolute top-8 flex items-center space-x-1"
-    style={{ right: '5%' }}
-  >
-    <Coins style={{ color: '#eab308' }} size={32} className="text-yellow-600 mr-2" />
-    <span
-      style={{
-        fontSize: '1.5rem',
-        fontWeight: 700,
-        color: '#eab308',
-      }}
-    >
-      金幣: {pet.coins}
-    </span>
-  </div>
-</div>
+        {/* 金幣顯示區 */}
+        <div
+          className="absolute top-8 flex items-center space-x-1"
+          style={{ right: '5%' }}
+        >
+          <Coins style={{ color: '#eab308' }} size={32} className="text-yellow-600 mr-2" />
+          <span
+            style={{
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              color: '#eab308',
+            }}
+          >
+            金幣: {pet.coins}
+          </span>
+        </div>
+      </div>
+      {/* 主要內容區 */}
+      <div className="flex-1 overflow-y-auto p-4">
+        {currentView === 'home' && <HomeView pet={pet} inventory={inventory} feedPet={feedPet} playWithPet={playWithPet} cleanPet={cleanPet} restPet={restPet} />}
+        {currentView === 'shop' && <ShopView pet={pet} buyItem={buyItem} />}
+        {currentView === 'stats' && <StatsView pet={pet} achievements={achievements} />}
+      </div>
+      {/*  底部導航 */}
+      <div className="bg-white border-t shadow-lg">
+        <div className="flex justify-around py-2">
+          <button
+            onClick={() => setCurrentView('home')}
+            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
+              currentView === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
+            }`}
+          >
+            <Home className="w-5 h-5" />
+            <span className="text-xs mt-1">首頁</span>
+          </button>
 
-        {/* 主要內容區 */}
-        <div className="flex-1 overflow-y-auto p-4">
-          {currentView === 'home' && <HomeView pet={pet} inventory={inventory} feedPet={feedPet} playWithPet={playWithPet} cleanPet={cleanPet} restPet={restPet} />}
-          {currentView === 'shop' && <ShopView pet={pet} buyItem={buyItem} />}
-          {currentView === 'stats' && <StatsView pet={pet} achievements={achievements} />}
+          <button
+            onClick={() => setCurrentView('shop')}
+            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
+              currentView === 'shop' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
+            }`}
+          >
+            <Coins className="w-5 h-5" />
+            <span className="text-xs mt-1">商店</span>
+          </button>
+
+          <button
+            onClick={() => setCurrentView('stats')}
+            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
+              currentView === 'stats' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
+            }`}
+          >
+            <Trophy className="w-5 h-5" />
+            <span className="text-xs mt-1">統計</span>
+          </button>
         </div>
-        {/*  底部導航 */}
-        <div className="bg-white border-t shadow-lg">
-          <div className="flex justify-around py-2">
-            <button
-              onClick={() => setCurrentView('home')}
-              className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-                currentView === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
-              }`}
-            >
-              <Home className="w-5 h-5" />
-              <span className="text-xs mt-1">首頁</span>
-            </button>
-  
-            <button
-              onClick={() => setCurrentView('shop')}
-              className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-                currentView === 'shop' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
-              }`}
-            >
-              <Coins className="w-5 h-5" />
-              <span className="text-xs mt-1">商店</span>
-            </button>
-  
-            <button
-              onClick={() => setCurrentView('stats')}
-              className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-                currentView === 'stats' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
-              }`}
-            >
-              <Trophy className="w-5 h-5" />
-              <span className="text-xs mt-1">統計</span>
-            </button>
-          </div>
-        </div>
+      </div>
       </div>
     </div>
   );

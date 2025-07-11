@@ -1,7 +1,7 @@
 // src/components/StatusBar.jsx
 
 import React from 'react';
-import { getStatusColor } from '../utils/petStatusUtils';
+import { getStatusColor } from '../utils/petStatus'; // Adjust the import path as necessary
 
 const StatusBar = ({ label, value, icon, color }) => {
 

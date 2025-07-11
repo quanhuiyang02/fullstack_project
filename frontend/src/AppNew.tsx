@@ -8,7 +8,7 @@ import eat from './assets/eat.gif';
 import HomeView from './components/HomeView';
 import ShopView from './components/ShopView';
 import StatsView from './components/StatsView';
-import { getPetEmoji } from './utils/petStatusUtils';
+import { getPetEmoji } from './utils/petStatus';
 import { showNotificationMessage } from './utils/notificationUtils';
 import { usePetStatus } from './hooks/usePetStatus';
 
