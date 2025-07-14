@@ -8,7 +8,7 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/fullstack_project">
       <Routes>
         {/* 首頁 → LoginPage */}
         <Route path="/" element={<LoginPage />} />
