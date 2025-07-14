@@ -11,7 +11,10 @@
     "isolatedModules": true,             // 支援單檔編譯
     "esModuleInterop": true,             // 支援 CommonJS 模組
     "skipLibCheck": true,                // 跳過第三方型別檢查，提高速度
-    "forceConsistentCasingInFileNames": true // 檔名大小寫一致檢查
+    "forceConsistentCasingInFileNames": true, // 檔名大小寫一致檢查
+    "rootDir": "src",      // 設定原始碼根目錄
+    "outDir": "dist",      // 設定輸出目錄為 dist
+    "noEmit": false        // 允許輸出 JS 檔案
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
