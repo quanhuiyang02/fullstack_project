@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",         // ✅ 允許 JSX（通常預設有）
-    "allowJs": true,            // ✅ 允許 .js/.jsx 檔案
-    "checkJs": false,           // ✅ 不要檢查 .js/.jsx 的型別錯誤
+    "target": "esnext",                 // 目標編譯到現代 ES
+    "lib": ["dom", "dom.iterable", "es2015"],  // 支援瀏覽器環境和 ES6+
+    "allowJs": true,                   // 允許 JS 檔案
+    "checkJs": false,                  // 不檢查 JS 型別
+    "jsx": "react-jsx",                // React 17+ JSX 新語法
+    "module": "esnext",                // 使用 ES 模組
+    "moduleResolution": "node",        // 模組解析方式
+    "resolveJsonModule": true,          // 允許 import json
+    "isolatedModules": true,             // 支援單檔編譯
+    "esModuleInterop": true,             // 支援 CommonJS 模組
+    "skipLibCheck": true,                // 跳過第三方型別檢查，提高速度
+    "forceConsistentCasingInFileNames": true // 檔名大小寫一致檢查
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
-
-// {
-//   "files": [],
-//   "references": [
-//     { "path": "./tsconfig.app.json" },
-//     { "path": "./tsconfig.node.json" }
-//   ]
-// }
