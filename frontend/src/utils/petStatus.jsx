@@ -1,4 +1,4 @@
-// src/utils/statusColor.js
+// src/utils/petStatus.jsx
 
 export const getStatusColor = (value) => {
   if (value >= 70) return 'bg-green-500';
