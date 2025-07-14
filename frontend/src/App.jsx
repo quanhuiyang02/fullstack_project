@@ -259,7 +259,7 @@ const VirtualPetGame = () => {
       {/* 主要內容區 */}
       <div className="flex-1 overflow-y-auto p-4">
         {currentView === 'home' && <HomeView pet={pet} inventory={inventory} feedPet={feedPet} playWithPet={playWithPet} cleanPet={cleanPet} restPet={restPet} />}
-        {currentView === 'shop' && <ShopView pet={pet} buyItem={buyItem} />}
+        {currentView === 'shop' && <ShopView pet={pet} buyItem={buyItem} playCoin={playCoin}/>}
         {currentView === 'stats' && <StatsView pet={pet} achievements={achievements} />}
       </div>
       {/*  底部導航 */}
