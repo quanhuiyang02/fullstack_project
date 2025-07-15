@@ -3,6 +3,8 @@ import clickSound from "../assets/click.mp3";
 import magicSound from "../assets/magic.mp3";
 import coinSound from "../assets/coin.mp3";
 import bgm from "../assets/bgm.mp3";
+import statsMusic from "../assets/win.mp3";
+
 
 const useSoundEffects = () => {
     // 音效播放器
@@ -10,6 +12,8 @@ const useSoundEffects = () => {
     const magicAudio = useRef(null);
     const coinAudio = useRef(null);
     const bgmAudio = useRef(null);
+    const statsAudio = useRef(null);
+
 
     // 音效播放器初始化
     useEffect(() => {
@@ -17,6 +21,7 @@ const useSoundEffects = () => {
     magicAudio.current = new Audio(magicSound);
     coinAudio.current = new Audio(coinSound);
     bgmAudio.current = new Audio(bgm);
+    statsAudio.current = new Audio(statsMusic);
 
     bgmAudio.current.loop = true;
     bgmAudio.current.volume = 0.5;
@@ -52,11 +57,27 @@ const useSoundEffects = () => {
       coinAudio.current.play();
     }
   };
-    return {
-    playClick,
-    playMagic,
-    playCoin
-  };
+  const playStatsMusic = () => {
+  if (statsAudio.current) {
+    statsAudio.current.currentTime = 0;
+    statsAudio.current.play();
+  }
+};
+const stopStatsMusic = () => {
+  if (statsAudio.current) {
+    statsAudio.current.pause();
+    statsAudio.current.currentTime = 0;
+  }
+};
+
+   return {
+  playClick,
+  playMagic,
+  playCoin,
+  playStatsMusic,
+  stopStatsMusic
+};
+
 }
 
 export default useSoundEffects;
