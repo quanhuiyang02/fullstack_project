@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/fullstack_project/sw.js', { scope: '/fullstack_project/' })})}
