@@ -11,8 +11,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'icon-192.png', 'icon-512.png'],
       manifest: {
-        name: '心寵生活',
-        short_name: '心寵',
+        name: '心寵生活 - 電子寵物養成遊戲',
+        short_name: '心寵生活',
         start_url: '.',
         display: 'standalone',
         background_color: '#ffffff',
