@@ -14,9 +14,9 @@ export default defineConfig({
         name: '心寵生活 - 電子寵物養成遊戲',
         short_name: '心寵生活',
         start_url: '.',
-        display: 'standalone',
+        display: 'fullscreen',
         background_color: '#ffffff',
-        theme_color: '#4f46e5',
+        theme_color: '#FAC400',
         icons: [
           {
             src: 'icon-192.png',
