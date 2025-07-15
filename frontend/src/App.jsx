@@ -53,6 +53,55 @@ const VirtualPetGame = () => {
   // 啟用通知函數
   const notify = (message) => showNotificationMessage(message, setShowNotification);
 
+  // 聲音播放器
+  const clickAudio = useRef(null);
+  const magicAudio = useRef(null);
+  const coinAudio = useRef(null);
+  const bgmAudio = useRef(null);
+
+  // 音效播放器初始化
+  useEffect(() => {
+    // 初始化音效
+    clickAudio.current = new Audio(clickSound);
+    magicAudio.current = new Audio(magicSound);
+    coinAudio.current = new Audio(coinSound);
+    bgmAudio.current = new Audio(bgm);
+
+    bgmAudio.current.loop = true;
+    bgmAudio.current.volume = 0.5;
+
+    // 等待使用者互動才播放（瀏覽器限制）
+    const handleUserInteraction = () => {
+      bgmAudio.current.play();
+      window.removeEventListener('click', handleUserInteraction);
+    };
+    window.addEventListener('click', handleUserInteraction);
+
+    return () => {
+      bgmAudio.current.pause();
+      window.removeEventListener('click', handleUserInteraction);
+    };
+  }, []);
+
+  const playClick = () => {
+    if (clickAudio.current) {
+      clickAudio.current.currentTime = 0;
+      clickAudio.current.play();
+    }
+  };
+  const playMagic = () => {
+    if (magicAudio.current) {
+      magicAudio.current.currentTime = 0;
+      magicAudio.current.play();
+    }
+  };
+  const playCoin = () => {
+    if (coinAudio.current) {
+      coinAudio.current.currentTime = 0;
+      coinAudio.current.play();
+    }
+  };
+
   // 成就系統
   const achievements = [
     { id: 'first_feed', name: '第一次餵食', description: '餵食寵物一次', icon: '🍖', unlocked: false },
@@ -92,6 +141,7 @@ const VirtualPetGame = () => {
 
   const feedPet = () => {
     if (inventory.food > 0) {
+      playMagic();
       setPet(prev => ({
         ...prev,
         hunger: Math.min(100, prev.hunger + 25),
@@ -108,6 +158,7 @@ const VirtualPetGame = () => {
 
   const playWithPet = () => {
     if (pet.energy > 20) {
+      playMagic();
       setPet(prev => ({
         ...prev,
         happiness: Math.min(100, prev.happiness + 20),
@@ -125,6 +176,7 @@ const VirtualPetGame = () => {
 
   const cleanPet = () => {
     if (inventory.soap > 0) {
+      playMagic();
       setPet(prev => ({
         ...prev,
         cleanliness: Math.min(100, prev.cleanliness + 30),
@@ -140,6 +192,7 @@ const VirtualPetGame = () => {
   };
 
   const restPet = () => {
+    playMagic();
     setPet(prev => ({
       ...prev,
       energy: Math.min(100, prev.energy + 40),
@@ -206,14 +259,14 @@ const VirtualPetGame = () => {
       {/* 主要內容區 */}
       <div className="flex-1 overflow-y-auto p-4">
         {currentView === 'home' && <HomeView pet={pet} inventory={inventory} feedPet={feedPet} playWithPet={playWithPet} cleanPet={cleanPet} restPet={restPet} />}
-        {currentView === 'shop' && <ShopView pet={pet} buyItem={buyItem} />}
+        {currentView === 'shop' && <ShopView pet={pet} buyItem={buyItem} playCoin={playCoin}/>}
         {currentView === 'stats' && <StatsView pet={pet} achievements={achievements} />}
       </div>
       {/*  底部導航 */}
       <div className="bg-white border-t shadow-lg">
         <div className="flex justify-around py-2">
           <button
-            onClick={() => setCurrentView('home')}
+            onClick={() => { playClick(); setCurrentView('home')}}
             className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
               currentView === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
             }`}
@@ -223,7 +276,7 @@ const VirtualPetGame = () => {
           </button>
 
           <button
-            onClick={() => setCurrentView('shop')}
+            onClick={() => { playClick(); setCurrentView('shop')}}
             className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
               currentView === 'shop' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
             }`}
@@ -233,7 +286,7 @@ const VirtualPetGame = () => {
           </button>
 
           <button
-            onClick={() => setCurrentView('stats')}
+            onClick={() => { playClick(); setCurrentView('stats')}}
             className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
               currentView === 'stats' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
             }`}
