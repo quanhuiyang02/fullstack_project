@@ -41,7 +41,6 @@ const ExpBar = ({ level, exp, style }) => {
         <div
           style={{
             width: `${prog}%`,
-            height:'100%',
             height: '6px',
             background:'#22c55e',
             transition:'width 0.3s',

@@ -6,18 +6,13 @@ import petGif from './assets/ch.gif';
 import eat from './assets/eat.gif';
 import shopbackground from './assets/shopbg.gif';
 import statsbackground from './assets/statsbg.gif';
-import clickSound from './assets/click.mp3';
-import magicSound from './assets/magic.mp3';
-import coinSound from './assets/coin.mp3';
-import bgm from './assets/bgm.mp3';
 // 元件
 import HomeView from './components/HomeView';
 import ShopView from './components/ShopView';
 import StatsView from './components/StatsView';
 import { showNotificationMessage } from './utils/notificationUtils';
 import { handleLevelUp } from './utils/expUtils';
-// import { buyItem as buyItemHandler } from './utils/buyItemUtils';
-// import { usePetStatus } from './hooks/usePetStatus';
+import useSoundEffects from './hooks/useSoundEffect';
 
 const VirtualPetGame = () => {
   // 遊戲狀態
@@ -38,7 +33,6 @@ const VirtualPetGame = () => {
     lastPlayed: Date.now(),
     lastCleaned: Date.now()
   });
-
   const [currentView, setCurrentView] = useState('home');
   const [showNotification, setShowNotification] = useState('');
   const [inventory, setInventory] = useState({
@@ -49,58 +43,10 @@ const VirtualPetGame = () => {
   });
 
   const intervalRef = useRef();
+  const { playClick, playMagic, playCoin } = useSoundEffects();
 
   // 啟用通知函數
   const notify = (message) => showNotificationMessage(message, setShowNotification);
-
-  // 聲音播放器
-  const clickAudio = useRef(null);
-  const magicAudio = useRef(null);
-  const coinAudio = useRef(null);
-  const bgmAudio = useRef(null);
-
-  // 音效播放器初始化
-  useEffect(() => {
-    // 初始化音效
-    clickAudio.current = new Audio(clickSound);
-    magicAudio.current = new Audio(magicSound);
-    coinAudio.current = new Audio(coinSound);
-    bgmAudio.current = new Audio(bgm);
-
-    bgmAudio.current.loop = true;
-    bgmAudio.current.volume = 0.5;
-
-    // 等待使用者互動才播放（瀏覽器限制）
-    const handleUserInteraction = () => {
-      bgmAudio.current.play();
-      window.removeEventListener('click', handleUserInteraction);
-    };
-    window.addEventListener('click', handleUserInteraction);
-
-    return () => {
-      bgmAudio.current.pause();
-      window.removeEventListener('click', handleUserInteraction);
-    };
-  }, []);
-
-  const playClick = () => {
-    if (clickAudio.current) {
-      clickAudio.current.currentTime = 0;
-      clickAudio.current.play();
-    }
-  };
-  const playMagic = () => {
-    if (magicAudio.current) {
-      magicAudio.current.currentTime = 0;
-      magicAudio.current.play();
-    }
-  };
-  const playCoin = () => {
-    if (coinAudio.current) {
-      coinAudio.current.currentTime = 0;
-      coinAudio.current.play();
-    }
-  };
 
   // 成就系統
   const achievements = [
