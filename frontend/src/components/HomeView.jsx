@@ -44,7 +44,7 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) =
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-3">
+        <div className="absolute top-40 flex flex-col z-50"style={{ left: '4px',gap: '3px', width: '130px' }}>
           <StatusBar label="健康" value={pet.health} icon={<Heart className="w-4 h-4 text-red-500" />} />
           <StatusBar label="飢餓" value={pet.hunger} icon={<Utensils className="w-4 h-4 text-orange-500" />} />
           <StatusBar label="快樂" value={pet.happiness} icon={<Star className="w-4 h-4 text-yellow-500" />} />
