@@ -1,4 +1,4 @@
-# 🧩 Fullstack Virtual Pet Game (React + PHP + Python)
+# 🧩 Fullstack Virtual Pet Game  (React + PHP + Python)
 
 這是一個分層式全端專案，採用 Vite + React 前端，PHP 與 Python 為後端服務，結合 MySQL 儲存遊戲狀態與互動紀錄，打造虛擬寵物互動介面！
 
@@ -8,7 +8,7 @@
 
 ```
 fullstack_project/
-├── frontend/          # Vite + React 前端（獨立 package.json）
+├── frontend/          # Vite + React 前端
 ├── backend/           # 後端 API（PHP / Python）
 │   ├── public/        # PHP 路由處理（index.php）
 │   └── python/        # Flask API 或背景任務（app.py）
@@ -90,9 +90,9 @@ npm run dev          # 啟動前端
 
 本專案由以下四位成員協作開發與維護 👥：
 
-- [Ailey](mailto:ailey@example.com) — 前端架構、互動設計、美術整合 🐾 
-- [成員二]（職責：如後端 API / PHP 控制器設計） 🐾 
-- [成員三]（職責：如 Python 排程、資料管理） 🐾 
-- [成員四]（職責：如 UI/UX 視覺企劃、音效資源） 🐾 
+- [Amy](https://github.com/quanhuiyang02) — 前端架構、版本控制、後端架構 🐾 
+- [Lai](https://github.com/LaTiNeH)— 美術設計、首頁、登入頁面🐾 
+- [HJH](https://github.com/HJHuang001)— 文案設計、商店頁面、手機頁面 🐾 
+- [Yumi](https://github.com/Yumi1128)— 音樂設計、美術設計、成就頁面 🐾 
 
 強調模組化開發、跨平台啟動流程、簡約畫風與資料邏輯兼容的遊戲互動設計 ✨
