@@ -11,9 +11,10 @@ const StatusBar = ({ label, value, icon, color }) => {
         display:        'flex',
         justifyContent: 'space-between',
         alignItems:     'center',
-        padding:        '6px 12px',
-        gap:            '4px',
+        padding:        '4px 6px',
+        gap:            '1px',
         borderRadius:   '8px',
+        fontSize:       '14px',
         backgroundColor:getStatusColor(value),  // 半透明綠/黃/紅
         //border:         '1px solid rgba(255,255,255,0.7)',
         backdropFilter: 'blur(6px)',
@@ -21,7 +22,7 @@ const StatusBar = ({ label, value, icon, color }) => {
       }}
     >
       {/* 左側：icon + 標籤 */}
-      <div className="flex items-center space-x-1"style={{ whiteSpace:   'nowrap',flexShrink:   0,marginRight:  '8px',}}>{/*禁止豎排 */}
+      <div className="flex items-center space-x-1"style={{ whiteSpace:'nowrap',flexShrink:0,marginRight:'8px',}}>{/*禁止豎排 */}
         {icon}
         <span className="text-sm font-medium text-gray-700">{label}</span>
       </div>

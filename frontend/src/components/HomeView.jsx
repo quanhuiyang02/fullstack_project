@@ -7,6 +7,7 @@ import eat from'../assets/eat.gif';
 import StatusBar from './StatusBar';
 import ActionButton from './ActionButton';
 import { getPetEmoji } from '../utils/petEmoji';
+import ExpBar from './ExpBar';
 
 const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) => {
   //新增動畫狀態
@@ -29,27 +30,27 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) =
         className="absolute bottom-4 right-4 w-[192px] h-[192px] object-contain z-10 pointer-events-none"
         style={{ right: '1rem', bottom: '6rem' }}
       />
+      <ExpBar level={pet.level} exp={pet.exp}
+      style={{
+        position: 'absolute',
+        right:    '1rem',    // 與圖片同行
+        bottom:   '4.6rem',    // 圖片底是 6rem → 往上 2rem
+        height:     '19px'
+      }}
+    />
       <div className="flex-1 overflow-x-hidden overflow-y-auto space-y-6 pb-2 max-h-[calc(100%-100px)]">
         <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-6 text-center shadow-lg relative">
           <div className="text-8xl mb-4 animate-bounce">{getPetEmoji(pet)}</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">{pet.name}</h2>
-          <p className="text-[2rem] font-bold" style={{ color: '#ec4899' }}>
-            Lv: {pet.level} • EXP: {pet.exp}/100
-          </p>
-          <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-            <div
-              className="bg-purple-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${(pet.exp % 100)}%` }}
-            />
-          </div>
+          {/*<ExpBar level={pet.level} exp={pet.exp} />整段換成經驗條*/}
         </div>
 
-        <div className="absolute top-40 flex flex-col z-50"style={{ left: '4px',gap: '3px', width: '130px' }}>
-          <StatusBar label="健康" value={pet.health} icon={<Heart className="w-4 h-4 text-red-500" />} />
-          <StatusBar label="飢餓" value={pet.hunger} icon={<Utensils className="w-4 h-4 text-orange-500" />} />
-          <StatusBar label="快樂" value={pet.happiness} icon={<Star className="w-4 h-4 text-yellow-500" />} />
-          <StatusBar label="精力" value={pet.energy} icon={<Clock className="w-4 h-4 text-blue-500" />} />
-          <StatusBar label="清潔" value={pet.cleanliness} icon={<Bath className="w-4 h-4 text-cyan-500" />} />
+        <div className="absolute top-40 flex flex-col z-50"style={{ bottom: '4.5rem',left: '4px',gap: '3px', width: '110px' }}>
+          <StatusBar label="健康" value={pet.health} icon={<Heart size={17} className="w-4 h-4 text-red-500" />} />
+          <StatusBar label="飢餓" value={pet.hunger} icon={<Utensils size={17} className="w-4 h-4 text-orange-500" />} />
+          <StatusBar label="快樂" value={pet.happiness} icon={<Star size={17} className="w-4 h-4 text-yellow-500" />} />
+          <StatusBar label="精力" value={pet.energy} icon={<Clock size={17} className="w-4 h-4 text-blue-500" />} />
+          <StatusBar label="清潔" value={pet.cleanliness} icon={<Bath size={17} className="w-4 h-4 text-cyan-500" />} />
         </div>
       </div>
 
