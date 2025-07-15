@@ -4,7 +4,7 @@ import { Heart, Utensils, Gamepad2, Bath, Coins, Star, Clock, Trophy, Home, User
 import background from './assets/bg.gif';
 import petGif from './assets/ch.gif';
 import eat from './assets/eat.gif';
-import shopbackground from './assets/shopbg.png';
+import shopbackground from './assets/shopbg.gif';
 import statsbackground from './assets/statsbg.gif';
 import clickSound from './assets/click.mp3';
 import magicSound from './assets/magic.mp3';
