@@ -220,9 +220,9 @@ const VirtualPetGame = () => {
       </div>
       {/*  底部導航 */}
       <div className="bg-white border-t shadow-lg">
-        <div className="flex justify-around py-2">
+        <div style={{ display: 'flex', width: '100%',gap: '8px' }}>
           <button
-            onClick={() => { playClick(); setCurrentView('home')}}
+            onClick={() => { playClick(); setCurrentView('home')}}style={{ flex: 1 }}
             className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
               currentView === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
             }`}
@@ -232,9 +232,9 @@ const VirtualPetGame = () => {
           </button>
 
           <button
-            onClick={() => { playClick(); setCurrentView('shop')}}
+            onClick={() => { playClick(); setCurrentView('shop')}}style={{ flex: 1 }}
             className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-              currentView === 'shop' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
+              currentView === 'shop' ? 'text-blue-600 bg-transparent' : 'text-gray-600'
             }`}
           >
             <Coins className="w-5 h-5" />
@@ -242,7 +242,7 @@ const VirtualPetGame = () => {
           </button>
 
           <button
-            onClick={() => { playClick(); setCurrentView('stats')}}
+            onClick={() => { playClick(); setCurrentView('stats')}}style={{ flex: 1 }}
             className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
               currentView === 'stats' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
             }`}

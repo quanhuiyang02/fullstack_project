@@ -84,25 +84,25 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) =
 
       <div className="mt-auto pb-2">
        <div style={{ display: 'flex', gap: '2px',width: '100%' }}>
-          <ActionButton onClick={handleFeed} disabled={inventory.food === 0|| isActing} color="bg-orange-500"style={{ flex: 1 }}>
+          <ActionButton onClick={handleFeed} disabled={inventory.food === 0|| isActing} color="bg-transparent"style={{ flex: 1 }}>
             <div className="flex flex-col items-center text-xs">
               <Utensils className="w-5 h-5 mb-1" />
               餵食
             </div>
           </ActionButton>
-          <ActionButton onClick={handlePlay} disabled={pet.energy < 20|| isActing} color="bg-green-500"style={{ flex: 1 }}>
+          <ActionButton onClick={handlePlay} disabled={pet.energy < 20|| isActing} color="bg-transparent"style={{ flex: 1 }}>
             <div className="flex flex-col items-center text-xs">
               <Gamepad2 className="w-5 h-5 mb-1" />
               遊戲
             </div>
           </ActionButton>
-          <ActionButton onClick={handleClean} disabled={inventory.soap === 0|| isActing} color="bg-cyan-500"style={{ flex: 1 }}>
+          <ActionButton onClick={handleClean} disabled={inventory.soap === 0|| isActing} color="bg-transparent"style={{ flex: 1 }}>
             <div className="flex flex-col items-center text-xs">
               <Bath className="w-5 h-5 mb-1" />
               清潔
             </div>
           </ActionButton>
-          <ActionButton onClick={handleRest} disabled={isActing} color="bg-purple-500"style={{ flex: 1 }}>
+          <ActionButton onClick={handleRest} disabled={isActing} color="bg-transparent"style={{ flex: 1 }}>
             <div className="flex flex-col items-center text-xs">
               <Clock className="w-5 h-5 mb-1" />
               休息
