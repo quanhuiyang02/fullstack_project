@@ -14,6 +14,7 @@ import { showNotificationMessage } from './utils/notificationUtils';
 import { handleLevelUp } from './utils/expUtils';
 import useSoundEffects from './hooks/useSoundEffect';
 import usePetActions from './hooks/usePetActions';
+import useShopActions from './hooks/useShopActions';
 
 const VirtualPetGame = () => {
   // 遊戲狀態
@@ -46,6 +47,7 @@ const VirtualPetGame = () => {
   // 啟用通知函數
   const notify = (message) => showNotificationMessage(message, setShowNotification);
 
+  // 寵物互動
   const {
     feedPet,
     playWithPet,
@@ -58,6 +60,15 @@ const VirtualPetGame = () => {
     setInventory,
     notify
   });
+
+  // 商店互動
+  const { buyItem } = useShopActions({
+    pet,
+    setPet,
+    inventory,
+    setInventory,
+    notify
+});
 
   const intervalRef = useRef();
   const { playClick, playMagic, playCoin, playStatsMusic, stopStatsMusic } = useSoundEffects();
@@ -105,16 +116,6 @@ const VirtualPetGame = () => {
   // 經驗值和等級系統
   const addExp = (amount) => {
     setPet(prev => handleLevelUp(prev, amount, notify));
-  };
-
-  const buyItem = (item, cost) => {
-    if (pet.coins >= cost) {
-      setPet(prev => ({ ...prev, coins: prev.coins - cost }));
-      setInventory(prev => ({ ...prev, [item]: prev[item] + 1 }));
-      notify(`購買了${item === 'food' ? '食物' : item === 'soap' ? '肥皂' : '玩具'}！`);
-    } else {
-      notify('金幣不足！');
-    }
   };
 
   return (
