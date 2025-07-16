@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import { Heart, Utensils, Gamepad2, Bath, Star, Clock } from 'lucide-react';
 import petGif from '../assets/ch.gif';
 import eat from'../assets/eat.gif';
+import play from '../assets/play.gif';
+import bathGif from '../assets/bath.gif';
+import restGif from '../assets/rest.gif';
 import StatusBar from './StatusBar';
 import ActionButton from './ActionButton';
 import { getPetEmoji } from '../utils/petEmoji';
@@ -14,18 +17,38 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) =
  
   const [petAnim, setPetAnim] = useState('idle');
   /* ③ 包一層 handleFeed：先切動畫再呼叫父層 feedPet */
+  const animSrc = {
+    idle  : petGif,
+    eating: eat,
+    playing: play,
+    cleaning: bathGif,
+    resting: restGif,
+  };
+  
+  /* ② 通用觸發器：給動畫 key、動作函式、時長 */
+  const triggerAnim = (key, action, ms = 4000) => {
+    setPetAnim(key);
+    action();                     // 呼叫原本父層邏輯
+    setTimeout(() => setPetAnim('idle'), ms);
+  };
+  
+  /* ③ 各動作 handler，只佔一行 */
+  const handleFeed  = () => triggerAnim('eating',  feedPet);
+  const handlePlay  = () => triggerAnim('playing', playWithPet);
+  const handleClean = () => triggerAnim('cleaning', cleanPet);
+  const handleRest  = () => triggerAnim('resting', restPet, 5000); // 休息久一點
  
-  const handleFeed = () => {
+  {/*const handleFeed = () => { 
     setPetAnim('eating');   // 顯示吃飯 GIF
     feedPet();              // 執行原本餵食
     setTimeout(() => setPetAnim('idle'), 4000); // 2.5秒後切回
-  };
+  };*/}
 
   return (
     <div className="relative flex flex-col h-full overflow-hidden">
       <img
-        //刪除src={petGif}改為以下
-        src={petAnim === 'eating' ? eat : petGif}
+        //刪除src={petAnim === 'eating' ? eat : petGif}改為以下
+        src={animSrc[petAnim] ?? petGif}
         alt="寵物"
         className="absolute bottom-4 right-4 w-[192px] h-[192px] object-contain z-10 pointer-events-none"
         style={{ right: '1rem', bottom: '6rem' }}
@@ -62,19 +85,19 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) =
               餵食
             </div>
           </ActionButton>
-          <ActionButton onClick={playWithPet} disabled={pet.energy < 20} color="bg-green-500">
+          <ActionButton onClick={handlePlay} disabled={pet.energy < 20} color="bg-green-500">
             <div className="flex flex-col items-center text-xs">
               <Gamepad2 className="w-5 h-5 mb-1" />
               遊戲
             </div>
           </ActionButton>
-          <ActionButton onClick={cleanPet} disabled={inventory.soap === 0} color="bg-cyan-500">
+          <ActionButton onClick={handleClean} disabled={inventory.soap === 0} color="bg-cyan-500">
             <div className="flex flex-col items-center text-xs">
               <Bath className="w-5 h-5 mb-1" />
               清潔
             </div>
           </ActionButton>
-          <ActionButton onClick={restPet} color="bg-purple-500">
+          <ActionButton onClick={handleRest} color="bg-purple-500">
             <div className="flex flex-col items-center text-xs">
               <Clock className="w-5 h-5 mb-1" />
               休息
