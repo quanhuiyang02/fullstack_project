@@ -30,9 +30,6 @@ const LoginPage = () => {
             className="w-[300px] object-contain drop-shadow mb-2 "
             style={{  transform: 'translateY(-10rem)' ,opacity: 0.7}}
            />
-          <h1 className="text-3xl font-bold text-white drop-shadow">
-            歡迎來到心寵生活
-          </h1>
 
           <button
             onClick={() => navigate('/game')}
