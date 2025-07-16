@@ -1,6 +1,7 @@
 // src/components/LoginPage.jsx
 import { useNavigate } from 'react-router-dom';
 import background2 from '../assets/t.gif';       // 想用別張登入背景可自行換圖
+import titleImg     from '../assets/title.png'; 
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -19,8 +20,16 @@ const LoginPage = () => {
           backgroundPosition: 'center',
         }}
       >
+        
         {/* 內容：垂直置中 */}
         <div className="flex-1 flex flex-col items-center justify-center text-center space-y-10 px-8">
+          {/* ② 新增 LOGO 圖 */}
+          <img
+            src={titleImg}
+            alt="心寵生活"
+            className="w-[300px] object-contain drop-shadow mb-2 "
+            style={{  transform: 'translateY(-10rem)' ,opacity: 0.7}}
+           />
           <h1 className="text-3xl font-bold text-white drop-shadow">
             歡迎來到心寵生活
           </h1>
