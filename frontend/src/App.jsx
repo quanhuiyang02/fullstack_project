@@ -43,6 +43,9 @@ const VirtualPetGame = () => {
     soap: 4
   });
 
+  // 啟用通知函數
+  const notify = (message) => showNotificationMessage(message, setShowNotification);
+
   const {
     feedPet,
     playWithPet,
@@ -66,10 +69,6 @@ const VirtualPetGame = () => {
     stopStatsMusic();
   }
 }, [currentView]);
-
-
-  // 啟用通知函數
-  const notify = (message) => showNotificationMessage(message, setShowNotification);
 
   // 成就系統
   const achievements = [
