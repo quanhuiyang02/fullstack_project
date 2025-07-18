@@ -15,7 +15,7 @@ const LoginPage = () => {
                    shadow-xl ring-4 ring-indigo-300/60 bg-white/10 backdrop-blur-md flex flex-col"
         style={{
           backgroundImage: `url(${background2})`,
-          backgroundSize: 'contain',
+          backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
         }}
@@ -36,7 +36,7 @@ const LoginPage = () => {
             className="bg-indigo-600 hover:bg-indigo-700 text-white
                        px-10 py-3 rounded-xl text-lg font-semibold
                        shadow-lg transition active:scale-95"
-          
+            style={{ marginTop: '8rem' }}
           >
             訪客模式登入
           </button>
