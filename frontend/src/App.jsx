@@ -219,13 +219,16 @@ const VirtualPetGame = () => {
         {currentView === 'stats' && <StatsView pet={pet} achievements={achievements} />}
       </div>
       {/*  底部導航 */}
-      <div className="bg-white border-t shadow-lg">
-        <div className="flex justify-around py-2">
+      <div className="shadow-lg"style={{backgroundColor:"#FFEBAC", borderTop: '0px solid rgb(0, 0, 0)'}}>
+        <div style={{ display: 'flex', width: '100%',gap: '0px' }}>
           <button
             onClick={() => { playClick(); setCurrentView('home')}}
-            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-              currentView === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
-            }`}
+            className="bg-white flex flex-col items-center py-2 px-4 rounded-lg transition-colors"
+              style={{flex: 1,
+                backgroundColor: currentView === 'home' ? '#FFEBAC' : '#FFEBAC', // 激活時#F7B100，不激活時#C89600
+                color: currentView === 'home' ? '#000000' : '#000000',            
+                border: '1px solid #FFEBAC'                                         // 加個#C89600邊框（可選）
+              }}
           >
             <Home className="w-5 h-5" />
             <span className="text-xs mt-1">首頁</span>
@@ -233,9 +236,12 @@ const VirtualPetGame = () => {
 
           <button
             onClick={() => { playClick(); setCurrentView('shop')}}
-            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-              currentView === 'shop' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
-            }`}
+            className="bg-white flex flex-col items-center py-2 px-4 rounded-lg transition-colors"
+              style={{flex: 1,
+                backgroundColor: currentView === 'shop' ? '#FFEBAC' : '#FFEBAC', // 激活時#F7B100，不激活時#C89600
+                color: currentView === 'shop' ? '#000000' : '#0000000',           
+                border: '1px solid #FFEBAC'                                         // 加個#C89600邊框（可選）
+              }}
           >
             <Coins className="w-5 h-5" />
             <span className="text-xs mt-1">商店</span>
@@ -243,9 +249,12 @@ const VirtualPetGame = () => {
 
           <button
             onClick={() => { playClick(); setCurrentView('stats')}}
-            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
-              currentView === 'stats' ? 'text-blue-600 bg-blue-50' : 'text-gray-600'
-            }`}
+            className="bg-white flex flex-col items-center py-2 px-4 rounded-lg transition-colors"
+            style={{flex: 1,
+              backgroundColor: currentView === 'stats' ? '#FFEBAC' : '#FFEBAC', // 激活時#F7B100，不激活時#C89600
+              color: currentView === 'stats' ? '#000000' : '#000000',          
+              border: '1px solid #FFEBAC'                                         // 加個#C89600邊框（可選）
+            }}
           >
             <Trophy className="w-5 h-5" />
             <span className="text-xs mt-1">統計</span>
