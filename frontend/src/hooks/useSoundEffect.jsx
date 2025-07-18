@@ -1,3 +1,4 @@
+// hooks/useSoundEffect.jsx
 import { useRef, useEffect } from "react";
 import clickSound from "../assets/click.mp3";
 import magicSound from "../assets/magic.mp3";
