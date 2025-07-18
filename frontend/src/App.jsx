@@ -43,17 +43,7 @@ const VirtualPetGame = () => {
   });
 
   const intervalRef = useRef();
-  const { playClick, playMagic, playCoin, playStatsMusic, stopStatsMusic } = useSoundEffects();
-
-  useEffect(() => {
-  if (currentView === 'stats') {
-    playStatsMusic();
-  } else {
-    stopStatsMusic();
-  }
-}, [currentView]);
-
-
+  const { playClick, playMagic, playCoin } = useSoundEffects(currentView);
 
   // 啟用通知函數
   const notify = (message) => showNotificationMessage(message, setShowNotification);
