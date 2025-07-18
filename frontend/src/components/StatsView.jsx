@@ -3,7 +3,7 @@
 import React from 'react';
 import { Trophy } from 'lucide-react';
 import statsBg from '../assets/statsbg.gif';
-import handup from '../assets/handup.webp'; // <-- 載入 WebP 動畫
+import handup from '../assets/hu.gif'; // <-- 載入 WebP 動畫
 
 const StatsView = ({ pet, achievements }) => (
   <div className="relative space-y-4">
