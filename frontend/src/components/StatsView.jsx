@@ -7,40 +7,41 @@ import handup from '../assets/hu.gif';
 import parchment from '../assets/parchment.png';
 
 const StatsView = ({ pet, achievements }) => (
-  <div className="relative space-y-4">
-    {/* 左下角 PNG 圖 */}
-    <img
-      src={parchment}
-      alt="Parchment background"
-      style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        width: '300px',
-        height: '300px',
-        pointerEvents: 'none',
-        zIndex: 0,
-        opacity: 0.7,
-      }}
-    />
-
-    {/* 右下角角色動畫圖 */}
-    <img
-      src={handup}
-      alt="Pet waving"
-      style={{
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        width: '150px',
-        height: 'auto',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }}
-    />
-
+  
+  <div className="space-y-4">
     {/* 主內容容器 */}
-    <div className="relative z-10">
+    <div className="z-10">
+        {/* 左下角 PNG 圖 */}
+        <img
+          src={parchment}
+          alt="Parchment background"
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '300px',
+            height: '300px',
+            pointerEvents: 'none',
+            zIndex: 0,
+            opacity: 0.7,
+          }}
+        />
+
+        {/* 右下角角色動畫圖 */}
+        <img
+          src={handup}
+          alt="Pet waving"
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            width: '150px',
+            height: 'auto',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
+      
       {/* 統計區塊 */}
       <div className="mt-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
@@ -74,11 +75,11 @@ const StatsView = ({ pet, achievements }) => (
 
       {/* 成就區塊 */}
       <div className="bg-white rounded-lg p-4 shadow-sm mt-8">
+        
         <h3 className="font-bold mb-3 flex items-center">
           <Trophy className="w-5 h-5 mr-2 text-yellow-500" />
           成就 ({achievements.length}個)
         </h3>
-
         <div className="relative rounded-lg p-3 w-[280px] mx-auto backdrop-blur-sm bg-white/80">
           {achievements.length === 0 ? (
             <div className="text-center text-gray-500 py-8">
