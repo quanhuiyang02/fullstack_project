@@ -59,6 +59,7 @@ const HomeView = ({ pet, inventory, feedPet, playWithPet, cleanPet, restPet }) =
         style={{ right: '1rem', bottom: '6rem' }}
       />
       <ExpBar level={pet.level} exp={pet.exp}
+      
       style={{
         position: 'absolute',
         right:    '1rem',    // 與圖片同行
