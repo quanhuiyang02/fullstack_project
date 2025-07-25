@@ -19,8 +19,8 @@ const StatsView = ({ pet, achievements }) => (
         alt="Pet waving"
         style={{
           position: 'absolute',
-          bottom: 60,
-          right: 0,
+          bottom: '60px',
+          right: '20px',
           width: '80px',
           height: 'auto',
           pointerEvents: 'none',
