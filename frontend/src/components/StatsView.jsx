@@ -41,7 +41,7 @@ const StatsView = ({ pet, achievements }) => (
 
     {/* 主內容容器 */}
     <div className="relative z-10">
-      {/* 統計區塊（已移除 top 位移，避免標題被切） */}
+      {/* 統計區塊 */}
       <div className="mt-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
           <Trophy className="w-5 h-5 mr-2 text-blue-500" />
@@ -72,33 +72,33 @@ const StatsView = ({ pet, achievements }) => (
         </div>
       </div>
 
-      {/* 成就區塊（維持向上位移） */}
-      <div
-        className="bg-white rounded-lg p-4 shadow-sm mt-4 relative"
-        style={{ top: -40 }}
-      >
+      {/* 成就區塊 */}
+      <div className="bg-white rounded-lg p-4 shadow-sm mt-8">
         <h3 className="font-bold mb-3 flex items-center">
           <Trophy className="w-5 h-5 mr-2 text-yellow-500" />
-          成就
+          成就 ({achievements.length}個)
         </h3>
 
         <div className="relative rounded-lg p-3 w-[280px] mx-auto backdrop-blur-sm bg-white/80">
-          <div className="space-y-2">
-            {achievements.map((achievement) => (
-              <div key={achievement.id} className="flex items-center p-2 bg-gray-50 rounded">
-                <span className="text-2xl mr-3">{achievement.icon}</span>
-                <div className="flex-1">
-                  <div className="font-medium">{achievement.name}</div>
-                  <div className="text-sm text-gray-600">{achievement.description}</div>
+          {achievements.length === 0 ? (
+            <div className="text-center text-gray-500 py-8">
+              <p>還沒有解鎖任何成就</p>
+              <p className="text-sm mt-1">繼續照顧你的寵物來獲得成就吧！</p>
+            </div>
+          ) : (
+            <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+              {achievements.map((achievement) => (
+                <div key={achievement.id} className="flex items-center p-2 bg-gray-50 rounded">
+                  <span className="text-2xl mr-3">{achievement.icon}</span>
+                  <div className="flex-1">
+                    <div className="font-medium">{achievement.name}</div>
+                    <div className="text-sm text-gray-600">{achievement.description}</div>
+                  </div>
+                  <div className="w-4 h-4 rounded-full bg-green-500" />
                 </div>
-                <div
-                  className={`w-4 h-4 rounded-full ${
-                    achievement.unlocked ? 'bg-green-500' : 'bg-gray-300'
-                  }`}
-                />
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

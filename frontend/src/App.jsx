@@ -31,8 +31,12 @@ const VirtualPetGame = () => {
     achievements: [],
     lastFed: Date.now(),
     lastPlayed: Date.now(),
-    lastCleaned: Date.now()
+    lastCleaned: Date.now(),
+    feedCount: 0,
+    playCount: 0,
+    cleanCount: 0
   });
+
   const [currentView, setCurrentView] = useState('home');
   const [showNotification, setShowNotification] = useState('');
   const [inventory, setInventory] = useState({
@@ -48,52 +52,231 @@ const VirtualPetGame = () => {
   // 啟用通知函數
   const notify = (message) => showNotificationMessage(message, setShowNotification);
 
-  // 成就系統
-  const achievements = [
-    { id: 'first_feed', name: '第一次餵食', description: '餵食寵物一次', icon: '🍖', unlocked: false },
-    { id: 'first_play', name: '第一次遊戲', description: '和寵物玩耍一次', icon: '🎾', unlocked: false },
-    { id: 'reach_level_5', name: '成長達人', description: '達到等級5', icon: '⭐', unlocked: false },
-    { id: 'earn_500_coins', name: '小富翁', description: '累積500金幣', icon: '💰', unlocked: false }
+  // 成就系統定義
+  const allAchievements = [
+    { 
+      id: 1,
+      name: '第一次餵食', 
+      name_en: 'First Feed',
+      description: '餵食寵物一次', 
+      icon: '🍖',
+      condition_type: 'feed_count',
+      condition_value: 1,
+      reward_coins: 10,
+      unlocked: false
+    },
+    { 
+      id: 2,
+      name: '第一次遊戲', 
+      name_en: 'First Play',
+      description: '和寵物玩耍一次', 
+      icon: '🎾',
+      condition_type: 'play_count',
+      condition_value: 1,
+      reward_coins: 10,
+      unlocked: false
+    },
+    { 
+      id: 3,
+      name: '第一次清潔', 
+      name_en: 'First Clean',
+      description: '清潔寵物一次', 
+      icon: '🛁',
+      condition_type: 'clean_count',
+      condition_value: 1,
+      reward_coins: 10,
+      unlocked: false
+    },
+    { 
+      id: 4,
+      name: '成長達人', 
+      name_en: 'Growth Expert',
+      description: '達到等級5', 
+      icon: '⭐',
+      condition_type: 'level',
+      condition_value: 5,
+      reward_coins: 50,
+      unlocked: false
+    },
+    { 
+      id: 5,
+      name: '小富翁', 
+      name_en: 'Little Tycoon',
+      description: '累積500金幣', 
+      icon: '💰',
+      condition_type: 'coins',
+      condition_value: 500,
+      reward_coins: 100,
+      unlocked: false
+    },
+    { 
+      id: 6,
+      name: '遊戲愛好者', 
+      name_en: 'Game Enthusiast',
+      description: '遊戲10次', 
+      icon: '🎮',
+      condition_type: 'play_count',
+      condition_value: 10,
+      reward_coins: 30,
+      unlocked: false
+    },
+    { 
+      id: 7,
+      name: '餵食專家', 
+      name_en: 'Feed Expert',
+      description: '餵食20次', 
+      icon: '🥘',
+      condition_type: 'feed_count',
+      condition_value: 20,
+      reward_coins: 50,
+      unlocked: false
+    },
+    { 
+      id: 8,
+      name: '時間管理大師', 
+      name_en: 'Time Management Master',
+      description: '累積遊戲60分鐘', 
+      icon: '⏰',
+      condition_type: 'time_played',
+      condition_value: 3600, // 60分鐘 = 3600秒
+      reward_coins: 100,
+      unlocked: false
+    }
   ];
 
+  // 檢查並解鎖成就（對應後端Python 版本）
+  const checkAchievements = (newPetState) => {
+    // 獲取未解鎖的成就
+    const unlockedAchievements = allAchievements.filter(achievement => 
+      !newPetState.achievements.includes(achievement.id)
+    );
+    
+    if (!unlockedAchievements.length) {
+      return newPetState;
+    }
+    
+    const newlyUnlocked = [];
+    let totalRewardCoins = 0;
+    
+    for (const achievement of unlockedAchievements) {
+      let unlocked = false;
+      const { condition_type, condition_value } = achievement;
+      
+      // 檢查不同類型的成就條件（對應後端邏輯）
+      switch (condition_type) {
+        case 'level':
+          if (newPetState.level >= condition_value) {
+            unlocked = true;
+          }
+          break;
+          
+        case 'coins':
+          if (newPetState.coins >= condition_value) {
+            unlocked = true;
+          }
+          break;
+          
+        case 'time_played':
+          if (newPetState.totalPlayTime >= condition_value) {
+            unlocked = true;
+          }
+          break;
+          
+        case 'feed_count':
+          if (newPetState.feedCount >= condition_value) {
+            unlocked = true;
+          }
+          break;
+          
+        case 'play_count':
+          if (newPetState.playCount >= condition_value) {
+            unlocked = true;
+          }
+          break;
+          
+        case 'clean_count':
+          if (newPetState.cleanCount >= condition_value) {
+            unlocked = true;
+          }
+          break;
+      }
+      
+      if (unlocked) {
+        newlyUnlocked.push(achievement.id);
+        totalRewardCoins += achievement.reward_coins;
+        
+        // 顯示成就解鎖通知
+        notify(`🎉 解鎖成就: ${achievement.name}！獲得 ${achievement.reward_coins} 金幣！`);
+        console.log(`用戶解鎖成就: ${achievement.name}, 獎勵金幣: ${achievement.reward_coins}`);
+      }
+    }
+    
+    if (newlyUnlocked.length > 0) {
+      return {
+        ...newPetState,
+        achievements: [...newPetState.achievements, ...newlyUnlocked],
+        coins: newPetState.coins + totalRewardCoins
+      };
+    }
+    
+    return newPetState;
+  };
+
+  // 獲取已解鎖的成就列表（用於 StatsView 顯示）
+  const getUnlockedAchievements = () => {
+    return allAchievements.filter(achievement => 
+      pet.achievements.includes(achievement.id)
+    );
+  };
+
   // 自動狀態衰減
-    useEffect(() => {
-      intervalRef.current = setInterval(() => {
-        setPet((prev) => {
-          const newPet = {
-            ...prev,
-            hunger: Math.max(0, prev.hunger - 0.5),
-            happiness: Math.max(0, prev.happiness - 0.3),
-            energy: Math.max(0, prev.energy - 0.2),
-            cleanliness: Math.max(0, prev.cleanliness - 0.4),
-            totalPlayTime: prev.totalPlayTime + 1,
-          };
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setPet((prev) => {
+        const newPet = {
+          ...prev,
+          hunger: Math.max(0, prev.hunger - 0.5),
+          happiness: Math.max(0, prev.happiness - 0.3),
+          energy: Math.max(0, prev.energy - 0.2),
+          cleanliness: Math.max(0, prev.cleanliness - 0.4),
+          totalPlayTime: prev.totalPlayTime + 1,
+        };
 
-          // 健康值根據其他狀態計算
-          const avgStatus =
-            (newPet.hunger + newPet.happiness + newPet.energy + newPet.cleanliness) / 4;
-          newPet.health = Math.min(100, Math.max(0, avgStatus));
-          return newPet;
-        });
-      }, 30000);// 每30秒更新一次
+        // 健康值根據其他狀態計算
+        const avgStatus =
+          (newPet.hunger + newPet.happiness + newPet.energy + newPet.cleanliness) / 4;
+        newPet.health = Math.min(100, Math.max(0, avgStatus));
+        
+        // 檢查成就（時間相關的成就）
+        return checkAchievements(newPet);
+      });
+    }, 30000);// 每30秒更新一次
 
-      return () => clearInterval(intervalRef.current);
-    }, []);
+    return () => clearInterval(intervalRef.current);
+  }, []);
 
   // 經驗值和等級系統
   const addExp = (amount) => {
-    setPet(prev => handleLevelUp(prev, amount, notify));
+    setPet(prev => {
+      const leveledUpPet = handleLevelUp(prev, amount, notify);
+      return checkAchievements(leveledUpPet);
+    });
   };
 
+  // 修正餵食函數
   const feedPet = () => {
     if (inventory.food > 0) {
       playMagic();
-      setPet(prev => ({
-        ...prev,
-        hunger: Math.min(100, prev.hunger + 25),
-        happiness: Math.min(100, prev.happiness + 10),
-        lastFed: Date.now()
-      }));
+      setPet(prev => {
+        const newPet = {
+          ...prev,
+          hunger: Math.min(100, prev.hunger + 25),
+          happiness: Math.min(100, prev.happiness + 10),
+          lastFed: Date.now(),
+          feedCount: prev.feedCount + 1 // 增加餵食計數
+        };
+        return checkAchievements(newPet);
+      });
       setInventory(prev => ({ ...prev, food: prev.food - 1 }));
       addExp(10);
       notify(`${pet.name}很開心地吃完了食物！`);
@@ -102,33 +285,43 @@ const VirtualPetGame = () => {
     }
   };
 
+  // 遊戲函數
   const playWithPet = () => {
     if (pet.energy > 20) {
       playMagic();
-      setPet(prev => ({
-        ...prev,
-        happiness: Math.min(100, prev.happiness + 20),
-        energy: Math.max(0, prev.energy - 15),
-        lastPlayed: Date.now()
-      }));
-      addExp(15);
       const earnedCoins = Math.floor(Math.random() * 10) + 5;
-      setPet(prev => ({ ...prev, coins: prev.coins + earnedCoins }));
+      setPet(prev => {
+        const newPet = {
+          ...prev,
+          happiness: Math.min(100, prev.happiness + 20),
+          energy: Math.max(0, prev.energy - 15),
+          lastPlayed: Date.now(),
+          coins: prev.coins + earnedCoins,
+          playCount: prev.playCount + 1 // 增加遊戲計數
+        };
+        return checkAchievements(newPet);
+      });
+      addExp(15);
       notify(`和${pet.name}玩得很開心！獲得了${earnedCoins}金幣！`);
     } else {
       notify(`${pet.name}太累了，讓它休息一下吧！`);
     }
   };
 
+  // 清潔函數
   const cleanPet = () => {
     if (inventory.soap > 0) {
       playMagic();
-      setPet(prev => ({
-        ...prev,
-        cleanliness: Math.min(100, prev.cleanliness + 30),
-        happiness: Math.min(100, prev.happiness + 5),
-        lastCleaned: Date.now()
-      }));
+      setPet(prev => {
+        const newPet = {
+          ...prev,
+          cleanliness: Math.min(100, prev.cleanliness + 30),
+          happiness: Math.min(100, prev.happiness + 5),
+          lastCleaned: Date.now(),
+          cleanCount: prev.cleanCount + 1 // 增加清潔計數
+        };
+        return checkAchievements(newPet);
+      });
       setInventory(prev => ({ ...prev, soap: prev.soap - 1 }));
       addExp(8);
       notify(`${pet.name}現在乾乾淨淨的！`);
@@ -147,9 +340,16 @@ const VirtualPetGame = () => {
     notify(`${pet.name}睡了個好覺！`);
   };
 
+  // 購買函數
   const buyItem = (item, cost) => {
     if (pet.coins >= cost) {
-      setPet(prev => ({ ...prev, coins: prev.coins - cost }));
+      setPet(prev => {
+        const newPet = {
+          ...prev,
+          coins: prev.coins - cost
+        };
+        return checkAchievements(newPet);
+      });
       setInventory(prev => ({ ...prev, [item]: prev[item] + 1 }));
       notify(`購買了${item === 'food' ? '食物' : item === 'soap' ? '肥皂' : '玩具'}！`);
     } else {
@@ -167,9 +367,9 @@ const VirtualPetGame = () => {
           currentView === 'home' ? `url(${background})` 
           : currentView === 'shop' ? `url(${shopbackground})` 
           : currentView === 'stats' ? `url(${statsbackground})` : 'none',
-          backgroundSize: 'cover',           // 滿版不留白
+          backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-           backgroundPosition: 'center center'   // 垂直水平置中
+          backgroundPosition: 'center center'
         }}
       >
       {/* 通知 */}
@@ -206,7 +406,7 @@ const VirtualPetGame = () => {
       <div className="flex-1 overflow-y-auto p-4">
         {currentView === 'home' && <HomeView pet={pet} inventory={inventory} feedPet={feedPet} playWithPet={playWithPet} cleanPet={cleanPet} restPet={restPet} />}
         {currentView === 'shop' && <ShopView pet={pet} buyItem={buyItem} playCoin={playCoin}/>}
-        {currentView === 'stats' && <StatsView pet={pet} achievements={achievements} />}
+        {currentView === 'stats' && <StatsView pet={pet} achievements={getUnlockedAchievements()} />}
       </div>
       {/*  底部導航 */}
       <div className="shadow-lg"style={{backgroundColor:"#FFEBAC", borderTop: '0px solid rgb(0, 0, 0)'}}>
@@ -215,9 +415,9 @@ const VirtualPetGame = () => {
             onClick={() => { playClick(); setCurrentView('home')}}
             className="bg-white flex flex-col items-center py-2 px-4 rounded-lg transition-colors"
               style={{flex: 1,
-                backgroundColor: currentView === 'home' ? '#FFEBAC' : '#FFEBAC', // 激活時#F7B100，不激活時#C89600
+                backgroundColor: currentView === 'home' ? '#FFEBAC' : '#FFEBAC',
                 color: currentView === 'home' ? '#000000' : '#000000',            
-                border: '1px solid #FFEBAC'                                         // 加個#C89600邊框（可選）
+                border: '1px solid #FFEBAC'
               }}
           >
             <Home className="w-5 h-5" />
@@ -228,9 +428,9 @@ const VirtualPetGame = () => {
             onClick={() => { playClick(); setCurrentView('shop')}}
             className="bg-white flex flex-col items-center py-2 px-4 rounded-lg transition-colors"
               style={{flex: 1,
-                backgroundColor: currentView === 'shop' ? '#FFEBAC' : '#FFEBAC', // 激活時#F7B100，不激活時#C89600
+                backgroundColor: currentView === 'shop' ? '#FFEBAC' : '#FFEBAC',
                 color: currentView === 'shop' ? '#000000' : '#0000000',           
-                border: '1px solid #FFEBAC'                                         // 加個#C89600邊框（可選）
+                border: '1px solid #FFEBAC'
               }}
           >
             <Coins className="w-5 h-5" />
@@ -241,9 +441,9 @@ const VirtualPetGame = () => {
             onClick={() => { playClick(); setCurrentView('stats')}}
             className="bg-white flex flex-col items-center py-2 px-4 rounded-lg transition-colors"
             style={{flex: 1,
-              backgroundColor: currentView === 'stats' ? '#FFEBAC' : '#FFEBAC', // 激活時#F7B100，不激活時#C89600
+              backgroundColor: currentView === 'stats' ? '#FFEBAC' : '#FFEBAC',
               color: currentView === 'stats' ? '#000000' : '#000000',          
-              border: '1px solid #FFEBAC'                                         // 加個#C89600邊框（可選）
+              border: '1px solid #FFEBAC'
             }}
           >
             <Trophy className="w-5 h-5" />
