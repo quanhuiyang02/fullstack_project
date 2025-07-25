@@ -11,37 +11,35 @@ const StatsView = ({ pet, achievements }) => (
   <div className="space-y-4">
     {/* 主內容容器 */}
     <div className="z-10">
-        {/* 左下角 PNG 圖 */}
-        <img
-          src={parchment}
-          alt="Parchment background"
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            width: '300px',
-            height: '300px',
-            pointerEvents: 'none',
-            zIndex: 0,
-            opacity: 0.7,
-          }}
-        />
-
-        {/* 右下角角色動畫圖 */}
-        <img
-          src={handup}
-          alt="Pet waving"
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            width: '150px',
-            height: 'auto',
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-        />
-      
+      {/* 左下角 PNG 圖 */}
+      <img
+        src={parchment}
+        alt="Parchment background"
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '300px',
+          height: '300px',
+          pointerEvents: 'none',
+          zIndex: 0,
+          opacity: 0.7,
+        }}
+      />
+      {/* 右下角角色動畫圖 */}
+      <img
+        src={handup}
+        alt="Pet waving"
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: '150px',
+          height: 'auto',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
       {/* 統計區塊 */}
       <div className="mt-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
