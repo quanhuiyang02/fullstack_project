@@ -369,7 +369,8 @@ const VirtualPetGame = () => {
           : currentView === 'stats' ? `url(${statsbackground})` : 'none',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center center'
+          backgroundPosition: 'center center',
+          position: 'relative'
         }}
       >
       {/* 通知 */}

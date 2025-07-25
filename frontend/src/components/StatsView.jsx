@@ -12,29 +12,16 @@ const StatsView = ({ pet, achievements }) => (
     {/* 主內容容器 */}
     <div className="z-10">
       {/* 左下角 PNG 圖 */}
-      <img
-        src={parchment}
-        alt="Parchment background"
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          width: '300px',
-          height: '300px',
-          pointerEvents: 'none',
-          zIndex: 0,
-          opacity: 0.7,
-        }}
-      />
+      
       {/* 右下角角色動畫圖 */}
       <img
         src={handup}
         alt="Pet waving"
         style={{
           position: 'absolute',
-          bottom: 0,
+          bottom: 60,
           right: 0,
-          width: '150px',
+          width: '80px',
           height: 'auto',
           pointerEvents: 'none',
           zIndex: 0,
